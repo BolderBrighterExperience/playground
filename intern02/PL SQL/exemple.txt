@@ -1,0 +1,396 @@
+--SUMA A DOUA NUMERE IMPARTITA LA 3. NUMERELE SE CITESC DE LA TASTATURA
+SET SERVEROUTPUT ON
+ACCEPT P_NUMBER1 PROMPT 'INTRODUCETI PRIMUL NUMAR: '
+ACCEPT P_NUMBER2 PROMPT 'INTRODUCETI AL DOILEA NUMAR: '
+DECLARE
+    G_REZULTAT NUMBER;
+    V_NUM1 NUMBER(9,2) := &P_NUMBER1;
+    V_NUM2 NUMBER(9,2) := &P_NUMBER2;
+BEGIN
+    G_REZULTAT := (V_NUM1+V_NUM2)/3;
+    DBMS_OUTPUT.PUT_LINE(G_REZULTAT);
+END;
+
+
+
+
+--CASE EXPRESSIONS
+SET SERVEROUTPUT ON
+DEFINE p_grade = a
+DECLARE
+    v_grade CHAR(1) := UPPER('&p_grade');
+    v_appraisal VARCHAR2(20);
+BEGIN
+    v_appraisal :=  
+        CASE v_grade
+            WHEN 'A' THEN 'Excellent'
+            WHEN 'B' THEN 'Very Good'
+            WHEN 'C' THEN 'Good'
+            ELSE 'No such grade'
+        END;
+DBMS_OUTPUT.PUT_LINE('Grade: ' || v_grade ||' Appraisal ' || v_appraisal);
+END;
+
+--se afiseaza salariul si prenumele angajatului cu numele Leonid
+SET SERVEROUTPUT ON
+DECLARE
+    v_nume GAM_ANGAJATI2.NUME%TYPE;
+    v_prenume GAM_ANGAJATI2.PRENUME%TYPE := 'Leonid';
+    v_salariu GAM_ANGAJATI2.SALARIU%TYPE;
+BEGIN
+    SELECT nume, salariu
+    INTO v_nume, v_salariu
+    FROM gam_angajati2
+    WHERE prenume = v_prenume;
+    DBMS_OUTPUT.PUT_LINE('Angajatul '||v_nume||' '||v_prenume||' are '||v_salariu||' lei salariu.');
+END;
+
+
+
+
+
+--se afiseaza pe ecran utilizand structura LOOP..end loop numerele 9,7,4,0
+SET SERVEROUTPUT ON
+DECLARE
+    v_nr NUMBER(2) := 10;
+    i NUMBER(1) := 1;
+BEGIN
+    LOOP
+        v_nr := v_nr - i;
+        i := i + 1;
+        EXIT WHEN v_nr<0;
+        DBMS_OUTPUT.PUT_LINE(v_nr||' ');
+    END LOOP;
+END;
+
+
+
+
+
+--se afiseaza in ordine angajatii cu varste intre 58-65 de ani atat timp cat salariul acestora este mai mic decat media
+SET SERVEROUTPUT ON
+DECLARE
+    v_varsta NUMBER(2) := 58;
+    v_sal GAM_ANGAJATI2.SALARIU%TYPE;
+    v_codAng gam_angajati2.cod_angajat%TYPE;
+    v_salMediu v_sal%TYPE;
+BEGIN
+    SELECT AVG(salariu)
+    INTO v_salMediu
+    FROM GAM_ANGAJATI2;
+    LOOP
+        SELECT salariu, cod_angajat
+        INTO v_sal, v_codAng
+        FROM GAM_ANGAJATI2
+        WHERE varsta = v_varsta;
+        DBMS_OUTPUT.PUT_LINE('Angajatul '||v_codAng||' are '||v_varsta||' si '||v_sal||' lei salariu.');
+        v_varsta := v_varsta +1;
+        EXIT WHEN v_sal < v_salMediu OR v_varsta>=65;
+    END LOOP;
+END;
+
+
+
+
+
+--sa se afiseze pe ecran structura WHILE loop..end loop numerele 9,7,4,0
+SET SERVEROUTPUT ON
+DECLARE
+    v_number NUMBER(2) := 10;
+    i NUMBER(1) := 1;
+BEGIN
+    WHILE v_number > 0
+    LOOP
+        v_number := v_number - i;
+        i := i + 1;
+        DBMS_OUTPUT.PUT_LINE(v_number);
+        EXIT WHEN v_number < 0;
+    END LOOP;
+END;
+
+
+
+
+
+--sa se afiseze pe ecran structura FOR..end loop numerele 9,7,4,0
+SET SERVEROUTPUT ON
+DECLARE
+    v_number NUMBER(2) := 10;
+    i NUMBER(1);
+BEGIN
+    FOR i IN 1..10
+    LOOP
+        v_number := v_number - i;
+        DBMS_OUTPUT.PUT_LINE(v_number);
+        EXIT WHEN v_number = 0;
+    END LOOP;
+END;
+
+
+
+
+
+
+
+--sa se incarce in tabela mesaje numere de la 1..10, fara 6 si 8
+CREATE TABLE GAM_MESAJE
+(
+    REZ VARCHAR2(30)
+);
+
+SET SERVEROUTPUT ON
+DECLARE
+    i NUMBER(2);
+BEGIN
+    FOR i IN 1..10
+    LOOP
+        IF( i=6 OR i=8) THEN
+            NULL;
+        ELSE
+            INSERT INTO GAM_MESAJE(REZ) VALUES(i);
+        END IF;
+        --COMMIT;
+    END LOOP;
+END;
+
+SELECT * FROM GAM_MESAJE;
+
+
+
+
+
+--Sa se afiseze lista cu numele, prenumele si salariul angajatilor din oficiul CH folosind un cursor explicit
+--si trei variabile scalare
+SET SERVEROUTPUT ON
+DECLARE
+    v_nume gam_angajati2.nume%TYPE;
+    v_prenume gam_angajati2.prenume%TYPE;
+    v_sal gam_angajati2.salariu%TYPE;
+    CURSOR ang_cursor IS
+          SELECT nume, prenume, salariu
+          FROM gam_angajati2
+          WHERE UPPER(cod_oficiu)='CH';
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Lista cu angajatii din oficiul CH: ');
+    OPEN ang_cursor;
+    LOOP
+        FETCH ang_cursor INTO v_nume, v_prenume, v_sal;
+        EXIT WHEN ang_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(v_nume||' '||v_prenume||' are '||v_sal||' lei salariu.');
+    END LOOP;
+    CLOSE ang_cursor;
+END;
+
+
+
+
+
+
+--Sa se incarce in tabela Mesaje primii 5 angajati
+--ALTER TABLE GAM_MESAJEADD COD_ANG VARCHAR2(2);
+--ALTER TABLE GAM_MESAJEADD NUME VARCHAR2(30);
+DECLARE
+    v_codAng gam_angajati2.cod_angajat%TYPE;
+    v_nume gam_angajati2.nume%TYPE;
+    CURSOR mes_cursor IS
+        SELECT cod_angajat, nume
+        FROM gam_angajati2;
+BEGIN
+    OPEN mes_cursor;
+    FOR i IN 1..5 
+      LOOP
+        FETCH mes_cursor INTO v_codAng, v_nume;
+        INSERT INTO gam_mesaje VALUES(i, v_codAng, v_nume);
+      END LOOP;
+    CLOSE mes_cursor;
+END;
+--SELECT * FROM GAM_MESAJE;
+
+
+
+
+
+
+--primii 10 angajati cu FOR
+SET SERVEROUTPUT ON
+DECLARE
+    v_angid GAM_ANGAJATI2.COD_ANGAJAT%TYPE;
+    v_angnume gam_angajati2.nume%TYPE;
+    CURSOR ang_gam_cursor IS
+        SELECT cod_angajat, nume
+        FROM gam_angajati2;
+BEGIN
+    OPEN ang_gam_cursor;
+    FOR i IN 1..10 LOOP
+        FETCH ang_gam_cursor INTO v_angid, v_angnume;
+        DBMS_OUTPUT.PUT_LINE(v_angid||'     '||v_angnume);
+    END LOOP;
+    CLOSE ang_gam_cursor;
+END;
+
+
+
+
+--primii 10 angajati cu atributele cursorului explicit
+SET SERVEROUTPUT ON
+DECLARE
+    v_angid GAM_ANGAJATI2.COD_ANGAJAT%TYPE;
+    v_angnume gam_angajati2.nume%TYPE;
+    CURSOR ang_gam_cursor IS
+        SELECT cod_angajat, nume
+        FROM gam_angajati2;
+BEGIN
+    OPEN ang_gam_cursor;
+    LOOP
+        FETCH ang_gam_cursor INTO v_angid, v_angnume;
+        EXIT WHEN ang_gam_cursor%ROWCOUNT > 10 OR ang_gam_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(v_angid||'     '||v_angnume);
+    END LOOP;
+    CLOSE ang_gam_cursor;
+END;
+
+
+
+
+--procedura cu parametri de tip IN si parametrii de tip OUT
+CREATE OR REPLACE PROCEDURE gam_query_emp
+  (p_cod   IN   GAM_ANGAJATI2.COD_ANGAJAT%TYPE,
+  p_nume   OUT  GAM_ANGAJATI2.NUME%TYPE,
+  p_prenume OUT GAM_ANGAJATI2.PRENUME%TYPE,
+  p_salariu OUT GAM_ANGAJATI2.SALARIU%TYPE)
+IS
+BEGIN
+    SELECT nume, prenume, salariu
+    INTO p_nume, p_prenume, p_salariu
+    FROM GAM_ANGAJATI2
+    WHERE cod_angajat=p_cod;
+    DBMS_OUTPUT.PUT_LINE('Angajatul '||p_nume||' '||p_prenume||' are salariul de '||p_salariu||' lei.');
+END;
+--apel procedura
+SET SERVEROUTPUT ON
+DECLARE
+    v_nume GAM_ANGAJATI2.NUME%TYPE;
+    v_prenume GAM_ANGAJATI2.PRENUME%TYPE;
+    v_salariu GAM_ANGAJATI2.SALARIU%TYPE;
+BEGIN
+    gam_query_emp('AI', v_nume, v_prenume, v_salariu);
+END;
+
+
+
+
+
+
+--functie de verificare numar prim
+CREATE OR REPLACE FUNCTION gam_prime_number
+  (n NUMBER)
+RETURN BOOLEAN
+IS v_number NUMBER;
+   ok NUMBER;
+BEGIN
+  IF (MOD(n,2)=0) THEN 
+      ok := 1;
+  ELSE
+      v_number := n/2;
+      FOR i in 2..v_number/2
+      LOOP
+        IF(MOD(n,i)=0) THEN
+            ok := 1;
+        EXIT;
+        ELSE
+            ok := 0;
+        END IF;
+      END LOOP;
+  END IF;
+  IF ( n IN (0,1)) THEN
+      RETURN NULL;
+  ELSIF (ok=1) THEN
+       RETURN FALSE;
+  ELSE
+       RETURN TRUE;
+  END IF;
+END;
+
+--apel functie cu numar citit de la tastatura.
+--determinare numar prim mai mic decat un numar dat
+/*
+SET SERVEROUTPUT ON
+ACCEPT p_number PROMPT 'Insert a number to verify if is prime'
+DECLARE
+  v_nr  NUMBER := &p_number;
+  i NUMBER := 1;
+BEGIN      
+    IF (gam_prime_number(v_nr) IS NULL ) THEN
+        DBMS_OUTPUT.PUT_LINE('0 or 1 are not prime numbers.');
+    ELSIF (gam_prime_number(v_nr)) THEN
+       DBMS_OUTPUT.PUT_LINE(v_nr||': prime number');
+    ELSE
+       DBMS_OUTPUT.PUT_LINE(v_nr||': not a prime number. Searching for the next prime number smaller than '||v_nr);
+       WHILE v_nr > 0
+       LOOP
+          v_nr := v_nr - i;
+          IF (gam_prime_number(v_nr)) THEN
+                DBMS_OUTPUT.PUT_LINE(v_nr||': prime number');
+                EXIT;
+          ELSE
+                i := i + 1;
+          END IF;
+       END LOOP;
+  END IF;
+END;
+*/
+
+
+
+
+
+
+--functie pentru verificare adresa email
+CREATE OR REPLACE FUNCTION gam_check_email
+  (email VARCHAR2)
+RETURN BOOLEAN
+IS  v_email VARCHAR2(50);
+BEGIN
+    v_email := email;
+    IF (v_email LIKE '_%@ibm%.__%') THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END;
+--apel functie
+SET SERVEROUTPUT ON
+ACCEPT p_email PROMPT 'Insert an address to check: '
+DECLARE
+    v_email VARCHAR2(50) := '&p_email';
+BEGIN
+    IF (gam_check_email(v_email)) THEN
+        DBMS_OUTPUT.PUT_LINE(v_email||': Adresa corecta de email');
+    ELSE 
+        DBMS_OUTPUT.PUT_LINE(v_email||': Adresa incorecta de email');
+    END IF;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
