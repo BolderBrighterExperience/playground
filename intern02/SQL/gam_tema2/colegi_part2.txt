@@ -1,0 +1,25 @@
+--1.Denisa: Scrieti o interogare, ce ar afisa regiunea si numãrul de oficii in fiecare regiune.
+SELECT REGIUNE,
+       COUNT(COD_OFICIU) OFICII
+FROM   GAM_OFICII
+GROUP BY REGIUNE;
+
+--2.Denisa: Scrieti o interogare, ce ar afisa valoarea medie a datorilor companiilor, 
+--ce au datorii mai mari ca 10 000 euro
+SELECT ROUND(AVG(SUMA_PLANIFICATA)) VALOARE_MEDIE_DATORII
+FROM   GAM_ANGAJATI
+WHERE  SUMA_PLANIFICATA>10000;
+
+--3.Denisa: Scrieti o interogare, ce ar afisa: numele, prenumele, funcþia, data angajãrii reprezentantului 
+--unei companii cu cea mai micã sumã planificatã.  
+SELECT NUME,
+       PRENUME,
+       FUNCTIA,
+       DATA_ANGAJARE
+FROM   GAM_ANGAJATI
+WHERE  SUMA_PLANIFICATA = (SELECT suma_planificata
+                           FROM   (SELECT SUMA_PLANIFICATA
+                                   FROM GAM_ANGAJATI 
+                                   WHERE  SUMA_PLANIFICATA>0 
+                                   ORDER BY SUMA_PLANIFICATA)
+                           WHERE ROWNUM=1);
