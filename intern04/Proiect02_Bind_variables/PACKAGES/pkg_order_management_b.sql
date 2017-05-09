@@ -76,17 +76,8 @@ IS
                 gt_orders(i).o_items(j).discount_price   := r_items.discount_price;
                 gt_orders(i).o_items(j).quantity         := r_items.quantity;
                 
-            /*DBMS_OUTPUT.PUT_LINE('Order id: '||t_orders(i).o_items(j).order_id||
-                                    ' Item id: '||t_orders(i).o_items(j).line_item_id||
-                                    ' Product id: '||t_orders(i).o_items(j).product_id||
-                                    ' Unit price: '||t_orders(i).o_items(j).unit_price||
-                                    ' Discount price: '||t_orders(i).o_items(j).discount_price||
-                                    ' Quantity: '||t_orders(i).o_items(j).quantity);*/
             END LOOP;
             
-            /*DBMS_OUTPUT.PUT_LINE('Customer id: '||t_orders(i).customer_id||
-                                 ' Order id: '||t_orders(i).order_id||
-                                 ' Order date: '||t_orders(i).order_date);*/
         END LOOP;
       
     IF (i = 0 OR j=0) THEN
@@ -147,12 +138,7 @@ IS
                                             ||' Discount price: '        ||gt_orders(i).o_items(j).discount_price
                                             ||' Quantity: '              ||gt_orders(i).o_items(j).quantity
                                             );
-                        DBMS_OUTPUT.PUT_LINE('Item id: '        ||gt_orders(i).o_items(j).line_item_id||
-                   ' Product id: '    ||gt_orders(i).o_items(j).product_id||
-                   ' Unit price: '    ||gt_orders(i).o_items(j).unit_price||
-                   ' Discount price: '||gt_orders(i).o_items(j).discount_price||
-                   ' Quantity price: '||gt_orders(i).o_items(j).quantity
-                   );
+
                     END LOOP;
                     gt_orders(i).o_items.DELETE;
                    
@@ -162,7 +148,7 @@ IS
                                     || CHR(10) || 'Amount: '                 || ln_amount
                                     || CHR(10) || 'Amount (with discount): ' || ln_amount_disc
                                     || CHR(10)); 
-                DBMS_OUTPUT.PUT_LINE('Number of items: ' || ls_count);
+
                 END LOOP;
                 
                 INSERT INTO printed_orders VALUES( seq_printed_orders.NEXTVAL, lc_clob);
@@ -206,12 +192,7 @@ IS
                                         ||' Quantity: '              ||gt_orders(i).o_items(j).quantity
                                         );
                                         
-                   DBMS_OUTPUT.PUT_LINE('Item id: '        ||gt_orders(i).o_items(j).line_item_id||
-                   ' Product id: '    ||gt_orders(i).o_items(j).product_id||
-                   ' Unit price: '    ||gt_orders(i).o_items(j).unit_price||
-                   ' Discount price: '||gt_orders(i).o_items(j).discount_price||
-                   ' Quantity price: '||gt_orders(i).o_items(j).quantity
-                   );
+
                    
                 END LOOP;
                 gt_orders(i).o_items.DELETE;
@@ -222,8 +203,6 @@ IS
                                     || CHR(10) || 'Amount: '                 || ln_amount
                                     || CHR(10) || 'Amount (with discount): ' || ln_amount_disc
                                     || CHR(10)); 
-                                   
-                DBMS_OUTPUT.PUT_LINE('Number of items: ' || ls_count);
             END LOOP;
             
             INSERT INTO printed_orders VALUES( seq_printed_orders.NEXTVAL, lc_clob);
