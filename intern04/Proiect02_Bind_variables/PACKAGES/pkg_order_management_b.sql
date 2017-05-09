@@ -154,6 +154,7 @@ IS
                    ' Quantity price: '||gt_orders(i).o_items(j).quantity
                    );
                     END LOOP;
+                    gt_orders(i).o_items.DELETE;
                    
                 lc_clob := CONCAT (lc_clob, CHR(10) || 'Number of items: ' || ls_count || CHR(10) || CHR(10));
                 lc_clob := CONCAT (lc_clob, 'Order Footer'
@@ -213,6 +214,7 @@ IS
                    );
                    
                 END LOOP;
+                gt_orders(i).o_items.DELETE;
                
                 lc_clob := CONCAT (lc_clob, CHR(10) || 'Number of items: ' || ls_count || CHR(10) || CHR(10));
                 lc_clob := CONCAT (lc_clob, 'Order Footer'
