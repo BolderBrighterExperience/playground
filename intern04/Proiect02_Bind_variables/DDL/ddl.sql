@@ -35,5 +35,6 @@ CREATE TABLE printed_orders(
                             id          NUMBER PRIMARY KEY,
                             details     CLOB
                             );
+
 /
-/
+
