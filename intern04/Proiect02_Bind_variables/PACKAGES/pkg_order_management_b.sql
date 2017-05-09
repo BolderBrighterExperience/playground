@@ -30,7 +30,7 @@ IS
         i                   INTEGER := 0;
         j                   INTEGER := 0;
         
-        CURSOR c_items 
+        CURSOR c_items (an_o_id orders.order_id%TYPE)
         IS 
             SELECT  order_id, 
                     line_item_id, 
@@ -39,7 +39,7 @@ IS
                     discount_price, 
                     quantity 
             FROM    order_items
-            WHERE   order_id = NVL(an_order_id,order_id);
+            WHERE   order_id = NVL(an_o_id,order_id);
 
         CURSOR c_orders 
         IS
@@ -65,8 +65,9 @@ IS
             gt_orders(i).cust_last_name      := r_orders.cust_last_name;
             gt_orders(i).city                := r_orders.city;
             gt_orders(i).country             := r_orders.country;
+            DBMS_OUTPUT.PUT_LINE(gt_orders(i).order_id);
                       
-            FOR r_items IN c_items
+            FOR r_items IN c_items(r_orders.order_id)
             LOOP
                 j := j + 1; 
                 gt_orders(i).o_items(j).order_id         := r_items.order_id;
@@ -75,6 +76,12 @@ IS
                 gt_orders(i).o_items(j).unit_price       := r_items.unit_price;
                 gt_orders(i).o_items(j).discount_price   := r_items.discount_price;
                 gt_orders(i).o_items(j).quantity         := r_items.quantity;
+                DBMS_OUTPUT.PUT_LINE(gt_orders(i).o_items(j).order_id||' '||
+                gt_orders(i).o_items(j).line_item_id||' '||
+                gt_orders(i).o_items(j).product_id||' '||
+                gt_orders(i).o_items(j).unit_price ||' '||
+                gt_orders(i).o_items(j).discount_price ||' '||
+                gt_orders(i).o_items(j).quantity );
                 
             END LOOP;
             
