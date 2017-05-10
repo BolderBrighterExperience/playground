@@ -170,6 +170,7 @@ IS
                 WHERE order_id = var_id_order.order_id;
         
             END LOOP;
+            gt_orders.DELETE;
      
         ELSE         
             prc_load_order(an_order_id);
@@ -208,7 +209,8 @@ IS
                                       || CHR(10) || 'Amount: '               || ln_amount
                                       || CHR(10) || 'Amount with discount: ' || ln_amount_disc
                                       || CHR(10));         
-            END LOOP;        
+            END LOOP;
+            gt_orders.DELETE;            
             INSERT INTO printed_orders VALUES (id_type_seq.NEXTVAL, lc_details);
             UPDATE orders
             SET printed = 1
