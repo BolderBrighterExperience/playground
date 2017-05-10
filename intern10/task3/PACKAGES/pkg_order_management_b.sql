@@ -16,7 +16,7 @@ IS
                    c.cust_email,      
                    c.phone_number            
             FROM  orders o, customers c
-            WHERE o.order_id = an_order_id AND o.customer_id = c.customer_id;      
+            WHERE o.order_id = NVL(an_order_id,o.order_id) AND o.customer_id = c.customer_id;      
             
         CURSOR get_or_items(ord_id orders.order_id%TYPE)
         IS
@@ -27,7 +27,7 @@ IS
                    discount_price, 
                    quantity
             FROM  order_items
-            WHERE order_id = ord_id;  
+            WHERE order_id = NVL(ord_id,order_id);  
     BEGIN
         FOR get_orders_var IN get_orders 
         LOOP
@@ -99,7 +99,7 @@ IS
                                             chr(10)||' Order date: '   ||gt_orders(i).order_date     ||
                                             chr(10)||' Order body ';                   
                    
-                            ln_count := 0;
+                            ln_count        := 0;
                             ln_amount       := 0;
                             ln_amount_d     := 0;                               
                             FOR j IN gt_orders(i).order_items.FIRST .. gt_orders(i).order_items.LAST        
@@ -117,7 +117,9 @@ IS
                                                        ||' Order Footer '                                                       
                                                        || chr(10) || ' Amount: ' || ln_amount
                                                        || chr(10) || ' Amount (with discount): '|| ln_amount_d);                      
-                        END LOOP;                         
+                        END LOOP;
+                        gt_orders.DELETE();
+                        
                     INSERT INTO printed_orders VALUES(printed_id_seq.NEXTVAL,lc_details);  
                         
                     UPDATE orders
@@ -164,13 +166,13 @@ IS
                     END LOOP;  
                     gt_orders.DELETE();
                         
-            INSERT INTO printed_orders VALUES(printed_id_seq.NEXTVAL,lc_details);
-                    
-            UPDATE orders
-            SET    printed = 1
-            WHERE  order_id = an_order_id;               
-            END IF;
-             prc_log('info','pkg_order_management.prc_print_order');
+                INSERT INTO printed_orders VALUES(printed_id_seq.NEXTVAL,lc_details);
+                        
+                UPDATE orders
+                SET    printed = 1
+                WHERE  order_id = an_order_id;               
+                END IF;
+                 prc_log('info','pkg_order_management.prc_print_order');
             
     EXCEPTION
         WHEN OTHERS THEN
