@@ -220,7 +220,7 @@ IS
     EXCEPTION
         WHEN OTHERS THEN
             proc_log(SQLCODE, SQLERRM,'error', 'pkg_order_management.prc_load_order');
-                    
+            RAISE;        
         
 END prc_print_order;
 END pkg_order_management;   
