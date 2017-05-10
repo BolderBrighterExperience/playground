@@ -104,7 +104,7 @@ IS
     BEGIN
     
         IF(an_order_id IS NULL) THEN
-            FOR r_var IN c_var 
+            FOR r_var IN c_var
             LOOP
                 pkg_order_management.prc_load_order(r_var.order_id);
                 
@@ -151,9 +151,15 @@ IS
 
                 END LOOP;
                 
-                INSERT INTO printed_orders VALUES( seq_printed_orders.NEXTVAL, lc_clob);
-                UPDATE orders SET printed = 1 WHERE order_id = r_var.order_id;
-                COMMIT;
+                gt_orders.DELETE;
+                
+                INSERT 
+                INTO    printed_orders 
+                VALUES  (seq_printed_orders.NEXTVAL, lc_clob);
+                
+                UPDATE  orders 
+                SET     printed = 1 
+                WHERE   order_id = r_var.order_id;
                 
                 lc_clob := NULL;
                 
@@ -205,9 +211,15 @@ IS
                                     || CHR(10)); 
             END LOOP;
             
-            INSERT INTO printed_orders VALUES( seq_printed_orders.NEXTVAL, lc_clob);
-            UPDATE orders SET printed = 1 WHERE order_id = an_order_id;
-            COMMIT;
+            gt_orders.DELETE;
+            
+            INSERT 
+            INTO    printed_orders 
+            VALUES  (seq_printed_orders.NEXTVAL, lc_clob);
+            
+            UPDATE  orders 
+            SET     printed = 1 
+            WHERE   order_id = an_order_id;
             
         END IF;
         
@@ -218,7 +230,7 @@ IS
             prc_log_error( 'error', SQLCODE, SQLERRM, ls_procedure_name);
             RAISE;
                 
-     END prc_print_order;
+    END prc_print_order;
      
 END pkg_order_management;
 /   

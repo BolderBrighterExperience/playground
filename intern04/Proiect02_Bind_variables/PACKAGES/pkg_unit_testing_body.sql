@@ -291,7 +291,7 @@ END prc_ut_adjust_employee_data;
 PROCEDURE prc_ut_remove_employee
 IS
 BEGIN
-     BEGIN
+    BEGIN
         pkg_hr_employees.prc_remove_employee(186);
         dbms_output.put_line('Success on delete employee.');
         COMMIT;
@@ -319,6 +319,73 @@ BEGIN
             ROLLBACK;
     END;
 END prc_ut_remove_employee;
+
+PROCEDURE prc_ut_load_order
+IS
+BEGIN
+    BEGIN
+        pkg_order_management.prc_load_order(2453);
+        dbms_output.put_line('Success on loading order.');
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on loading order.');
+    END;
+    BEGIN
+        pkg_order_management.prc_load_order(null);
+        dbms_output.put_line('Success on loading order.');
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on loading order.');
+    END;
+    BEGIN
+        pkg_order_management.prc_load_order(-103);
+        dbms_output.put_line('Success on loading order.');
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on loading order.');
+    END;
+END prc_ut_load_order;
+
+PROCEDURE prc_ut_print_order
+IS
+BEGIN
+    BEGIN
+        pkg_order_management.prc_print_order(null);
+        dbms_output.put_line('Success on printing  order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+     END;
+    BEGIN
+        pkg_order_management.prc_print_order(2399);
+        dbms_output.put_line('Success on printing order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing order.');
+            ROLLBACK;
+    END;
+    BEGIN
+        pkg_order_management.prc_print_order(2457);
+        dbms_output.put_line('Success on printing order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+    END;
+    BEGIN
+        pkg_order_management.prc_print_order(-105);
+        dbms_output.put_line('Success on printing order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+    END;
+END prc_ut_print_order;
 
 END pkg_unit_testing;
 /
