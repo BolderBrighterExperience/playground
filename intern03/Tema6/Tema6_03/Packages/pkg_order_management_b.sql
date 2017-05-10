@@ -217,11 +217,11 @@ IS
             WHERE order_id = an_order_id;
     
         END IF;
-        proc_log( SQLCODE, SQLERRM,'info', 'pkg_order_management.prc_load_order');
+        proc_log( SQLCODE, SQLERRM,'info', 'pkg_order_management.prc_print_order');
     
     EXCEPTION
         WHEN OTHERS THEN
-            proc_log(SQLCODE, SQLERRM,'error', 'pkg_order_management.prc_load_order');
+            proc_log(SQLCODE, SQLERRM,'error', 'pkg_order_management.prc_print_order');
             RAISE;        
         
 END prc_print_order;
