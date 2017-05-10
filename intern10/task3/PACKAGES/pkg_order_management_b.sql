@@ -160,8 +160,9 @@ IS
                                 lc_details :=  CONCAT (lc_details,chr(10)   
                                                        ||' Order Footer '                                                       
                                                        || chr(10) || ' Amount: ' || ln_amount
-                                                       || chr(10) || ' Amount (with discount): '|| ln_amount_d);                                                                           
+                                                       || chr(10) || ' Amount (with discount): '|| ln_amount_d);                                                          
                     END LOOP;  
+                    gt_orders.DELETE();
                         
             INSERT INTO printed_orders VALUES(printed_id_seq.NEXTVAL,lc_details);
                     
@@ -169,6 +170,12 @@ IS
             SET    printed = 1
             WHERE  order_id = an_order_id;               
             END IF;
+             prc_log('info','pkg_order_management.prc_print_order');
+            
+    EXCEPTION
+        WHEN OTHERS THEN
+        prc_log('eroare','pkg_order_management.prc_print_order');
+        RAISE;        
     END prc_print_order; 
     
 END pkg_order_management;   
