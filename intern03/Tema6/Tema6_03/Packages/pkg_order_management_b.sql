@@ -49,7 +49,7 @@ IS
                discount_price, 
                quantity
         FROM order_items t
-      WHERE t.order_id = an_ord_id;  
+       WHERE t.order_id = NVL(an_ord_id, t.order_id);   
       
       
         
