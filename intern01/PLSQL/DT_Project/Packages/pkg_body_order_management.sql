@@ -129,6 +129,7 @@ BEGIN
       
                  
              END LOOP;
+			  gt_orders.DELETE;
             
         INSERT 
         INTO printed_orders 
@@ -182,6 +183,7 @@ BEGIN
                                     || CHR(10)); 
           
          END LOOP;
+		  gt_orders.DELETE;
          
          INSERT 
          INTO   printed_orders 
