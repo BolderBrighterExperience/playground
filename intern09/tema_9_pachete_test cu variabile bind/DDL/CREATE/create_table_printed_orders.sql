@@ -1,0 +1,16 @@
+DROP TABLE printed_orders;
+
+CREATE TABLE printed_orders 
+(
+ id NUMBER,
+ details CLOB
+);
+
+DROP SEQUENCE seq_09_id;
+
+CREATE SEQUENCE seq_09_id
+MINVALUE 1
+MAXVALUE 99999
+INCREMENT BY 1
+START WITH 1
+NOCYCLE;
