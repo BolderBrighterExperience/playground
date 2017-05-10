@@ -235,5 +235,88 @@ BEGIN
             ROLLBACK;
     END; 
 END prc_unit_remove_department ;    
+PROCEDURE prc_unit_load_order
+AS
+BEGIN
+
+    BEGIN
+        pkg_order_management.prc_load_order(null);
+        dbms_output.put_line('Order loaded!');
+     
+      
+    EXCEPTION
+        WHEN OTHERS THEN
+             dbms_output.put_line('Failed to load order!');
+           
+    END;
+    
+    
+    BEGIN
+        pkg_order_management.prc_load_order(2357);
+        dbms_output.put_line('Order loaded!');
+     
+      
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Failed to load order!');
+            
+    END;
+    
+    
+     BEGIN
+        pkg_order_management.prc_load_order(1);
+        dbms_output.put_line('Order loaded!');
+      
+      
+    EXCEPTION
+      WHEN OTHERS THEN
+           dbms_output.put_line('Failed to load order!');
+           
+    END;
+
+END prc_unit_load_order;
+    
+ PROCEDURE prc_unit_print_order
+ IS
+ BEGIN
+ 
+    BEGIN
+        pkg_order_management.prc_print_order(null);
+        dbms_output.put_line('Order printed!');
+        COMMIT;
+      
+    EXCEPTION
+      WHEN OTHERS THEN
+            dbms_output.put_line('Failed to print order!');
+            ROLLBACK;
+    END;
+    
+    
+    BEGIN
+        pkg_order_management.prc_load_order(2394);
+        dbms_output.put_line('Order printed!');
+        COMMIT;
+      
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Failed to print order!');
+            ROLLBACK;
+    END;
+    
+    
+     BEGIN
+        pkg_order_management.prc_load_order(5);
+        dbms_output.put_line('Order printed!');
+        COMMIT;
+      
+   EXCEPTION
+      WHEN OTHERS THEN
+            dbms_output.put_line('Failed to print order!');
+            ROLLBACK;
+    END;
+    
+    END  prc_unit_print_order;
 END pkg_unit_testing;
 /
+
+
