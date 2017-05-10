@@ -318,5 +318,74 @@ BEGIN
             ROLLBACK;
     END;
 END prc_remove_employee_ut;
+
+PROCEDURE prc_load_order_ut
+IS
+BEGIN
+
+    BEGIN
+        pkg_order_management.prc_load_order(2450);
+        DBMS_OUTPUT.PUT_LINE(' Comanda a fost incarcata in colectie. ');
+        EXCEPTION
+            WHEN OTHERS THEN
+                 DBMS_OUTPUT.PUT_LINE(' Comanda nu s-a incarcat in colectie. ');
+    END;
+
+    BEGIN
+        pkg_order_management.prc_load_order(2);
+        DBMS_OUTPUT.PUT_LINE(' Comanda a fost incarcata in colectie. ');
+       
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE(' Comanda nu s-a incarcat in colectie. ');
+    END;
+
+    BEGIN
+        pkg_order_management.prc_load_order(null);
+        DBMS_OUTPUT.PUT_LINE(' Toate comenzile neprintate au fost incarcata in colectie. ');
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE(' Comenzile nu s-au incarcat in colectie. ');
+    END;
+
+END prc_load_order_ut;
+
+PROCEDURE prc_print_order_ut
+IS
+BEGIN
+
+    BEGIN
+        pkg_order_management.prc_print_order(2450);
+        DBMS_OUTPUT.PUT_LINE(' Comanda a fost printata. ');
+        COMMIT;
+        
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE(' Comanda nu a fost printata. ');
+                ROLLBACK;
+    END;
+
+    BEGIN
+        pkg_order_management.prc_print_order(3);
+        DBMS_OUTPUT.PUT_LINE(' Comanda a fost printata. ');
+        COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE(' Comanda nu a fost printata. ');
+                ROLLBACK;
+    END;
+
+    BEGIN
+        pkg_order_management.prc_print_order();
+        DBMS_OUTPUT.PUT_LINE(' Toate comenzile au fost printate. ');
+        COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE(' Comenzile nu au fost printate. ');
+                ROLLBACK;
+    END;
+
+END prc_print_order_ut;
+
 END pkg_unit_test;
 /
