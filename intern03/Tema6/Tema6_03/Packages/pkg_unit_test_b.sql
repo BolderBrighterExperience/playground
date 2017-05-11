@@ -342,7 +342,7 @@ BEGIN
 
     BEGIN
         pkg_order_management.prc_load_order(null);
-        DBMS_OUTPUT.PUT_LINE(' Toate comenzile neprintate au fost incarcata in colectie. ');
+        DBMS_OUTPUT.PUT_LINE(' Toate comenzile neprintate au fost incarcate in colectie. ');
         EXCEPTION
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE(' Comenzile nu s-au incarcat in colectie. ');
