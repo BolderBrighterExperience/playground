@@ -26,7 +26,7 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO INSERT. CHECK LOG_TABLE');
         END;
-    END;
+    END call_prc_add_dept;
     
     PROCEDURE call_prc_adjust_dept
     IS
@@ -54,8 +54,7 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO UPDATE. CHECK LOG_TABLE');
         END;
-        
-    END;
+    END call_prc_adjust_dept;
     
     PROCEDURE call_prc_remove_dept
     IS
@@ -75,7 +74,7 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO DELETE. CHECK LOG_TABLE');
         END;
-    END;
+    END call_prc_remove_dept;
     
     PROCEDURE call_prc_add_emp
     IS
@@ -111,7 +110,7 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO INSERT. CHECK LOG_TABLE');
         END;
-    END;
+    END call_prc_add_emp;
     
     PROCEDURE call_prc_adjust_emp
     IS
@@ -139,7 +138,7 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO UPDATE. CHECK LOG_TABLE');
         END;
-    END;
+    END call_prc_adjust_emp;
     
     PROCEDURE call_prc_remove_emp
     IS
@@ -159,7 +158,7 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO DELETE. CHECK LOG_TABLE');
         END;
-    END;
+    END call_prc_remove_emp;
     
     PROCEDURE call_prc_load_order
     IS 
@@ -180,5 +179,18 @@ IS
                 DBMS_OUTPUT.PUT_LINE('FAILED TO LOAD ORDER. CHECK LOG_TABLE');
         END;
     END call_prc_load_order;
-END;
+    
+    PROCEDURE call_prc_print_order
+    IS
+    BEGIN
+        BEGIN
+            pkg_order_management.prc_print_order(2458);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL PRINT ORDER');
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('FAILED TO PRINT ORDER. CHECK LOG_TABLE');
+        END;
+    END call_prc_print_order;
+    
+END unit_testing;
 /

@@ -6,6 +6,7 @@ BEGIN
   --unit_testing.call_prc_add_emp;
   --unit_testing.call_prc_adjust_emp;
   --unit_testing.call_prc_remove_emp;
-  unit_testing.call_prc_load_order;
+  --unit_testing.call_prc_load_order;
+  unit_testing.call_prc_print_order;
 END;
 /

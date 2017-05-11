@@ -7,5 +7,6 @@ IS
     PROCEDURE call_prc_adjust_emp;
     PROCEDURE call_prc_remove_emp;
     PROCEDURE call_prc_load_order;
+    PROCEDURE call_prc_print_order;
 END;
 /

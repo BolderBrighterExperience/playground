@@ -61,13 +61,6 @@ IS
             aat_orders(cur_orders%ROWCOUNT).cust_first_name     := rec_orders.cust_first_name;
             aat_orders(cur_orders%ROWCOUNT).cust_last_name      := rec_orders.cust_last_name;
             
-            /*
-            DBMS_OUTPUT.PUT_LINE('');
-            DBMS_OUTPUT.PUT_LINE('cur_orders%ROWCOUNT: '||cur_orders%ROWCOUNT);
-            DBMS_OUTPUT.PUT_LINE('Order id: '||aat_orders(cur_orders%ROWCOUNT).order_id
-                                ||', order date: '||aat_orders(cur_orders%ROWCOUNT).order_date
-                                ||', customer name: '||aat_orders(cur_orders%ROWCOUNT).cust_first_name||' '||aat_orders(cur_orders%ROWCOUNT).cust_last_name);
-            */
             FOR rec_order_items IN cur_order_items(rec_orders.order_id)
             LOOP
                 aat_orders(cur_orders%ROWCOUNT).orders_table(cur_order_items%ROWCOUNT).order_id         := rec_order_items.order_id;
@@ -77,19 +70,12 @@ IS
                 aat_orders(cur_orders%ROWCOUNT).orders_table(cur_order_items%ROWCOUNT).discount_price   := rec_order_items.discount_price;
                 aat_orders(cur_orders%ROWCOUNT).orders_table(cur_order_items%ROWCOUNT).quantity         := rec_order_items.quantity;
                 
-                /*DBMS_OUTPUT.PUT_LINE('cur_order_items%ROWCOUNT: '||cur_order_items%ROWCOUNT);
-                DBMS_OUTPUT.PUT_LINE('Item id: '||aat_orders(cur_orders%ROWCOUNT).orders_table(cur_order_items%ROWCOUNT).order_id
-                                    ||', product id: '||aat_orders(cur_orders%ROWCOUNT).orders_table(cur_order_items%ROWCOUNT).product_id
-                                    ||', discount price: '||aat_orders(cur_orders%ROWCOUNT).orders_table(cur_order_items%ROWCOUNT).discount_price
-                                    ||', quantity: '||aat_orders(cur_orders%ROWCOUNT).orders_table(cur_order_items%ROWCOUNT).quantity);*/
-                
             END LOOP;
-            --DBMS_OUTPUT.PUT_LINE('aat_orders.count: '||aat_orders.count);
         END LOOP;
    
         prc_log_table( seq_intern02_log_table.NEXTVAL, USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, NULL, 'load order' );
         
-        IF ( aat_orders.EXISTS( an_order_id ) = FALSE ) THEN
+        IF ( aat_orders.EXISTS( an_order_id )) THEN
             RAISE le_invalid_order;   
         END IF;
         
@@ -97,12 +83,114 @@ IS
             WHEN le_invalid_order THEN
                 prc_log_table( seq_intern02_log_table.NEXTVAL, USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, NULL, 'Invalid order id' );
                 RAISE;
-            WHEN INVALID_CURSOR THEN
-                prc_log_table( seq_intern02_log_table.NEXTVAL, USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, NULL, SQLERRM );
-                RAISE;
             WHEN OTHERS THEN
                 prc_log_table( seq_intern02_log_table.NEXTVAL, USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, SQLCODE, SQLERRM );
                 RAISE;
     END;
+    
+    PROCEDURE prc_print_order (an_order_id IN orders.order_id%TYPE)
+    IS
+        LS_PROC_NAME        VARCHAR2(32) := 'prc_print_order';
+        lc_details          CLOB;
+        ln_amount           NUMBER;
+        
+        CURSOR cur_no_prt 
+        IS
+        SELECT order_id  
+        FROM orders
+        WHERE printed = 0 ;
+
+        BEGIN
+            IF (an_order_id IS NULL) THEN
+                FOR r_not_prt IN cur_no_prt
+                LOOP    
+                    pkg_order_management.prc_load_order(r_not_prt.order_id);
+                    
+                    FOR idx IN aat_orders.FIRST..aat_orders.LAST
+                    LOOP
+                        ln_amount   := 0;
+                        lc_details  :=   'Customer id: ' || aat_orders(idx).customer_id 
+                                        ||CHR(13) || 'Name: ' || aat_orders(idx).cust_first_name || ' ' || aat_orders(idx).cust_last_name 
+                                        ||CHR(13) || 'Order id: ' || aat_orders(idx).order_id 
+                                        ||CHR(13) || 'Order date: ' || aat_orders(idx).order_date;
+                                        
+                        FOR idx2 IN aat_orders(idx).orders_table.FIRST..aat_orders(idx).orders_table.LAST
+                        LOOP
+                            ln_amount   := ln_amount + aat_orders(idx).orders_table(idx2).unit_price * aat_orders(idx).orders_table(idx2).quantity ;
+                            lc_details  := CONCAT ( lc_details, 
+                                                       CHR(13) || 'Line item id: ' || aat_orders(idx).orders_table(idx2).line_item_id
+                                                    || CHR(13) || 'Product id: ' || aat_orders(idx).orders_table(idx2).product_id
+                                                    || CHR(13) || 'Unit price: ' || aat_orders(idx).orders_table(idx2).unit_price
+                                                    || CHR(13) || 'Discount price: ' || aat_orders(idx).orders_table(idx2).discount_price
+                                                    || CHR(13) || 'Quantity: ' || aat_orders(idx).orders_table(idx2).quantity );
+                        END LOOP;
+                        aat_orders(idx).orders_table.DELETE;    
+                            
+                        lc_details := CONCAT ( lc_details,
+                                                CHR(13) || 'Amount for entire order: ' || ln_amount );
+                    END LOOP;
+                    aat_orders.DELETE;
+
+                    INSERT 
+                    INTO    printed_orders 
+                    VALUES  (seq_printed_order_id.NEXTVAL, lc_details);
+                    
+                    lc_details := NULL;
+                    
+                    UPDATE  orders 
+                    SET     printed = 1 
+                    WHERE   order_id = r_not_prt.order_id;
+
+                    COMMIT;
+                END LOOP;
+            ELSE
+                pkg_order_management.prc_load_order(an_order_id);
+                    
+                    FOR idx IN aat_orders.FIRST..aat_orders.LAST
+                    LOOP
+                        ln_amount   := 0;
+                        lc_details  :=   'Customer id: ' || aat_orders(idx).customer_id 
+                                        ||CHR(13) || 'Name: ' || aat_orders(idx).cust_first_name || ' ' || aat_orders(idx).cust_last_name 
+                                        ||CHR(13) || 'Order id: ' || aat_orders(idx).order_id 
+                                        ||CHR(13) || 'Order date: ' || aat_orders(idx).order_date;
+                                        
+                        FOR idx2 IN aat_orders(idx).orders_table.FIRST..aat_orders(idx).orders_table.LAST
+                        LOOP
+                            ln_amount   := ln_amount + aat_orders(idx).orders_table(idx2).unit_price * aat_orders(idx).orders_table(idx2).quantity ;
+                            lc_details  := CONCAT ( lc_details, 
+                                                      CHR(13) || 'Line item id: ' || aat_orders(idx).orders_table(idx2).line_item_id
+                                                    || CHR(13) || 'Product id: ' || aat_orders(idx).orders_table(idx2).product_id
+                                                    || CHR(13) || 'Unit price: ' || aat_orders(idx).orders_table(idx2).unit_price
+                                                    || CHR(13) || 'Discount price: ' || aat_orders(idx).orders_table(idx2).discount_price
+                                                    || CHR(13) || 'Quantity: ' || aat_orders(idx).orders_table(idx2).quantity );
+                        END LOOP;
+                        aat_orders(idx).orders_table.DELETE;    
+                            
+                        lc_details := CONCAT ( lc_details,
+                                                CHR(13) || 'Amount for entire order: ' || ln_amount );
+                    END LOOP;
+                    aat_orders.DELETE;
+
+                    INSERT 
+                    INTO    printed_orders 
+                    VALUES  (seq_printed_order_id.NEXTVAL, lc_details);
+                    
+                    lc_details := NULL;
+                    
+                    UPDATE  orders 
+                    SET     printed = 1 
+                    WHERE   order_id = an_order_id;
+
+                    COMMIT;
+            END IF;
+            
+            prc_log_table( seq_intern02_log_table.NEXTVAL, USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, NULL, 'printed order' );
+        
+        EXCEPTION
+            WHEN OTHERS THEN
+                 prc_log_table( seq_intern02_log_table.NEXTVAL, USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, SQLCODE, SQLERRM );
+                RAISE;   
+    END;
+
 END pkg_order_management;
 /
