@@ -55,6 +55,7 @@ IS
             AND     o.customer_id    = c.customer_id;
 
     BEGIN
+                
         FOR r_orders IN c_orders
         LOOP
             i := i + 1;
@@ -65,7 +66,7 @@ IS
             gt_orders(i).cust_last_name      := r_orders.cust_last_name;
             gt_orders(i).city                := r_orders.city;
             gt_orders(i).country             := r_orders.country;
-                      
+            j := 0;
             FOR r_items IN c_items(r_orders.order_id)
             LOOP
                 j := j + 1; 
@@ -95,12 +96,16 @@ IS
     
     PROCEDURE prc_print_order (an_order_id IN orders.order_id%TYPE DEFAULT NULL)
     IS
-        ls_procedure_name   VARCHAR2(50):='pkg_order_management.prc_print_order';
-        ls_count            NUMBER  := 0;
+        ls_procedure_name   VARCHAR2(50)    :='pkg_order_management.prc_print_order';
+        ls_count            NUMBER          := 0;
         lc_clob             CLOB;
         ln_amount           NUMBER;
         ln_amount_disc      NUMBER;
-        CURSOR c_var IS SELECT order_id FROM orders WHERE printed = 0;
+        CURSOR c_var 
+        IS 
+            SELECT  order_id 
+            FROM    orders 
+            WHERE   printed = 0;
     BEGIN
     
         IF(an_order_id IS NULL) THEN
@@ -142,13 +147,12 @@ IS
                     END LOOP;
                     gt_orders(i).o_items.DELETE;
                    
-                lc_clob := CONCAT (lc_clob, CHR(10) || 'Number of items: ' || ls_count || CHR(10) || CHR(10));
-                lc_clob := CONCAT (lc_clob, 'Order Footer'
-                                    || CHR(10) 
-                                    || CHR(10) || 'Amount: '                 || ln_amount
-                                    || CHR(10) || 'Amount (with discount): ' || ln_amount_disc
-                                    || CHR(10)); 
-
+                    lc_clob := CONCAT (lc_clob, CHR(10) || 'Number of items: ' || ls_count || CHR(10) || CHR(10));
+                    lc_clob := CONCAT (lc_clob, 'Order Footer'
+                                        || CHR(10) 
+                                        || CHR(10) || 'Amount: '                 || ln_amount
+                                        || CHR(10) || 'Amount (with discount): ' || ln_amount_disc
+                                        || CHR(10)); 
                 END LOOP;
                 
                 gt_orders.DELETE;
@@ -196,10 +200,7 @@ IS
                                         ||' Unit price: '            ||gt_orders(i).o_items(j).unit_price
                                         ||' Discount price: '        ||gt_orders(i).o_items(j).discount_price
                                         ||' Quantity: '              ||gt_orders(i).o_items(j).quantity
-                                        );
-                                        
-
-                   
+                                        ); 
                 END LOOP;
                 gt_orders(i).o_items.DELETE;
                
