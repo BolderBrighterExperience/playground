@@ -75,7 +75,7 @@ IS
    
         prc_log_table( seq_intern02_log_table.NEXTVAL, USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, NULL, 'load order' );
         
-        IF ( aat_orders.EXISTS( an_order_id )) THEN
+        IF ( aat_orders.COUNT = 0) THEN
             RAISE le_invalid_order;   
         END IF;
         
@@ -149,7 +149,7 @@ IS
                     FOR idx IN aat_orders.FIRST..aat_orders.LAST
                     LOOP
                         ln_amount   := 0;
-                        lc_details  :=   'Customer id: ' || aat_orders(idx).customer_id 
+                        lc_details  :=  'Customer id: ' || aat_orders(idx).customer_id 
                                         ||CHR(13) || 'Name: ' || aat_orders(idx).cust_first_name || ' ' || aat_orders(idx).cust_last_name 
                                         ||CHR(13) || 'Order id: ' || aat_orders(idx).order_id 
                                         ||CHR(13) || 'Order date: ' || aat_orders(idx).order_date;
@@ -158,7 +158,7 @@ IS
                         LOOP
                             ln_amount   := ln_amount + aat_orders(idx).orders_table(idx2).unit_price * aat_orders(idx).orders_table(idx2).quantity ;
                             lc_details  := CONCAT ( lc_details, 
-                                                      CHR(13) || 'Line item id: ' || aat_orders(idx).orders_table(idx2).line_item_id
+                                                      CHR(13) || CHR(13) || 'Line item id: ' || aat_orders(idx).orders_table(idx2).line_item_id
                                                     || CHR(13) || 'Product id: ' || aat_orders(idx).orders_table(idx2).product_id
                                                     || CHR(13) || 'Unit price: ' || aat_orders(idx).orders_table(idx2).unit_price
                                                     || CHR(13) || 'Discount price: ' || aat_orders(idx).orders_table(idx2).discount_price
@@ -167,7 +167,7 @@ IS
                         aat_orders(idx).orders_table.DELETE;    
                             
                         lc_details := CONCAT ( lc_details,
-                                                CHR(13) || 'Amount for entire order: ' || ln_amount );
+                                               CHR(13) || CHR(13) || 'Amount for entire order: ' || ln_amount );
                     END LOOP;
                     aat_orders.DELETE;
 

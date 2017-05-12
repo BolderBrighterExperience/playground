@@ -190,6 +190,20 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO PRINT ORDER. CHECK LOG_TABLE');
         END;
+        BEGIN
+            pkg_order_management.prc_print_order(1);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL PRINT ORDER');
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('FAILED TO PRINT ORDER. CHECK LOG_TABLE');
+        END;
+        /*BEGIN
+            pkg_order_management.prc_print_order(null);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL PRINT ORDER');
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('FAILED TO PRINT ORDER. CHECK LOG_TABLE');
+        END;*/
     END call_prc_print_order;
     
 END unit_testing;
