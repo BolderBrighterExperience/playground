@@ -39,7 +39,9 @@ IS
         gt_orders(ln_count_i).cust_last_name  := get_orders_var.cust_last_name;
         gt_orders(ln_count_i).cust_email      := get_orders_var.cust_email;
         gt_orders(ln_count_i).phone_number    := get_orders_var.phone_number;
-     
+      
+            ln_count_j = 0;
+            
             FOR get_or_items_var IN get_or_items(get_orders_var.order_id)
             LOOP
             ln_count_j :=  ln_count_j + 1;
