@@ -72,8 +72,9 @@ IS
                                     ' Email: '       ||gt_orders(ln_counter_i).cust_email||
                                     ' Phone number: '||gt_orders(ln_counter_i).phone_number      
                                     );*/
-            ln_counter_j := 0;
-            FOR var_cursor_ord_items IN cursor_order_items(var_cursor_orders.order_id)
+<<<<<<< .mine
+            ln_counter_j NUMBER := 0;
+           FOR var_cursor_ord_items IN cursor_order_items(var_cursor_orders.order_id)
             LOOP
                 ln_counter_j :=  ln_counter_j + 1;
                 gt_orders(ln_counter_i).ord_items(ln_counter_j).order_id         := var_cursor_ord_items.order_id;
