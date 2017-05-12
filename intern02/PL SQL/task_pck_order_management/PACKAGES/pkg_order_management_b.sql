@@ -152,17 +152,17 @@ IS
                         lc_details  :=  'Customer id: ' || aat_orders(idx).customer_id 
                                         ||CHR(13) || 'Name: ' || aat_orders(idx).cust_first_name || ' ' || aat_orders(idx).cust_last_name 
                                         ||CHR(13) || 'Order id: ' || aat_orders(idx).order_id 
-                                        ||CHR(13) || 'Order date: ' || aat_orders(idx).order_date;
+                                        ||CHR(13) || 'Order date: ' || aat_orders(idx).order_date || CHR(13) || CHR(13);
                                         
                         FOR idx2 IN aat_orders(idx).orders_table.FIRST..aat_orders(idx).orders_table.LAST
                         LOOP
                             ln_amount   := ln_amount + aat_orders(idx).orders_table(idx2).unit_price * aat_orders(idx).orders_table(idx2).quantity ;
                             lc_details  := CONCAT ( lc_details, 
-                                                      CHR(13) || CHR(13) || 'Line item id: ' || aat_orders(idx).orders_table(idx2).line_item_id
+                                                      CHR(13)  || 'Line item id: ' || aat_orders(idx).orders_table(idx2).line_item_id
                                                     || CHR(13) || 'Product id: ' || aat_orders(idx).orders_table(idx2).product_id
                                                     || CHR(13) || 'Unit price: ' || aat_orders(idx).orders_table(idx2).unit_price
                                                     || CHR(13) || 'Discount price: ' || aat_orders(idx).orders_table(idx2).discount_price
-                                                    || CHR(13) || 'Quantity: ' || aat_orders(idx).orders_table(idx2).quantity );
+                                                    || CHR(13) || 'Quantity: ' || aat_orders(idx).orders_table(idx2).quantity || CHR(13) ) ;
                         END LOOP;
                         aat_orders(idx).orders_table.DELETE;    
                             
