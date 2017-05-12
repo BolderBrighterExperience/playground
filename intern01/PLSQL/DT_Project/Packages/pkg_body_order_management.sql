@@ -40,6 +40,7 @@ BEGIN
             gt_orders(i_counter).cust_last_name  := g_orders.cust_last_name;
             gt_orders(i_counter).cust_email      := g_orders.cust_email;
             
+            j_counter := 0;
             FOR g_order_items IN get_order_items(g_orders.order_id)
             LOOP
             j_counter := j_counter + 1;
