@@ -40,7 +40,7 @@ IS
         WHERE o.order_id = NVL(an_order_id, o.order_id) 
         AND o.customer_id = c.customer_id;      
 
-    CURSOR cursor_order_items( an_ord_id IN orders.order_id%TYPE )
+    CURSOR cursor_order_items( p_ord_id IN orders.order_id%TYPE )
     IS
         SELECT t.order_id, 
                line_item_id, 
@@ -49,7 +49,7 @@ IS
                discount_price, 
                quantity
         FROM order_items t
-       WHERE t.order_id = NVL(an_ord_id, t.order_id);   
+       WHERE t.order_id = p_ord_id;   
       
       
         
@@ -125,7 +125,7 @@ IS
         IF (an_order_id IS NULL) THEN
             FOR var_id_order IN c_id_order 
             LOOP
-                prc_load_order(var_id_order.order_id);
+                
               
     
                 FOR i IN gt_orders.FIRST .. gt_orders.LAST
@@ -175,7 +175,7 @@ IS
             gt_orders.DELETE;
      
         ELSE         
-            prc_load_order(an_order_id);
+            
           
     
             FOR i IN gt_orders.FIRST .. gt_orders.LAST
