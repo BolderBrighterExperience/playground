@@ -27,7 +27,7 @@ IS
                    discount_price, 
                    quantity
             FROM  order_items
-            WHERE order_id = NVL(ord_id,order_id);  
+            WHERE order_id = ord_id;
     BEGIN
         FOR get_orders_var IN get_orders 
         LOOP
@@ -40,7 +40,7 @@ IS
         gt_orders(ln_count_i).cust_email      := get_orders_var.cust_email;
         gt_orders(ln_count_i).phone_number    := get_orders_var.phone_number;
       
-            ln_count_j = 0;
+            ln_count_j := 0;
             
             FOR get_or_items_var IN get_or_items(get_orders_var.order_id)
             LOOP
