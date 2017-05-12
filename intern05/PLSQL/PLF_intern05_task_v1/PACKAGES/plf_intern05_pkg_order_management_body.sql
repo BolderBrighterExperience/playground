@@ -65,8 +65,8 @@ IS
 
             /* DBMS_OUTPUT.PUT_LINE('Order date: '||plf_orders(i).order_date
                                     ||', Customer_id: '||plf_orders(i).customer_id
-                                    ||', Cust_first_name: '||plf_orders(i).cust_first_name
-                                    ||', Cust_last_name: '||plf_orders(i).cust_last_name); */
+                                    ||', First_name: '||plf_orders(i).cust_first_name
+                                    ||', Last_name: '||plf_orders(i).cust_last_name); */
             
             FOR rec_order_items IN cur_order_items(rec_orders.order_id)
             LOOP
@@ -109,7 +109,7 @@ IS
         ln_amount           NUMBER;
         ln_amount_discount  NUMBER;
         le_invalid_order    EXCEPTION;
-        NewLineChar         VARCHAR2 :=  CHR(13) || CHR(10);
+        NewLineChar         VARCHAR2(50) :=  CHR(13) || CHR(10);
         
 CURSOR c_print IS SELECT order_id FROM orders WHERE printed = 0;
 BEGIN
@@ -125,7 +125,7 @@ BEGIN
                                 || NewLineChar ||' First name: '         ||plf_orders(i).cust_first_name
                                 || NewLineChar ||' Last name: '          ||plf_orders(i).cust_last_name
                                 || NewLineChar ||' Order id: '           ||plf_orders(i).order_id
-                                || NewLineChar ||' Order creation date: '||plf_orders(i).order_date
+                                || NewLineChar ||' Order date: '         ||plf_orders(i).order_date
                                 || NewLineChar 
                                 || NewLineChar ||'BODY'
                                 || NewLineChar;
@@ -138,7 +138,7 @@ BEGIN
                         ln_amount           := ln_amount        + plf_orders(i).orders_table(j).quantity * plf_orders(i).orders_table(j).unit_price;
                         ln_amount_discount  := ln_amount_discount   + plf_orders(i).orders_table(j).quantity * plf_orders(i).orders_table(j).discount_price;
                         lc_clob_detail      := CONCAT(lc_clob_detail, NewLineChar 
-                                            ||' Line item id: '           ||plf_orders(i).orders_table(j).line_item_id
+                                            ||' Line item id: '          ||plf_orders(i).orders_table(j).line_item_id
                                             ||' Product id: '            ||plf_orders(i).orders_table(j).product_id
                                             ||' Unit price: '            ||plf_orders(i).orders_table(j).unit_price
                                             ||' Discount price: '        ||plf_orders(i).orders_table(j).discount_price
@@ -148,7 +148,7 @@ BEGIN
                 lc_clob_detail := CONCAT (lc_clob_detail, NewLineChar || 'Number of items: ' || ls_count_number || NewLineChar || NewLineChar);
                 lc_clob_detail := CONCAT (lc_clob_detail, 'FOOTER'
                                         || NewLineChar 
-                                        || NewLineChar || 'Amount price: '                 || ln_amount
+                                        || NewLineChar || 'Amount price: '          || ln_amount
                                         || NewLineChar || 'Amount with discount : ' || ln_amount_discount
                                         || NewLineChar); 
                 END LOOP;               
@@ -173,7 +173,7 @@ BEGIN
                             || NewLineChar ||' First name: '         ||plf_orders(i).cust_first_name
                             || NewLineChar ||' Last name: '          ||plf_orders(i).cust_last_name
                             || NewLineChar ||' Order id: '           ||plf_orders(i).order_id
-                            || NewLineChar ||' Order creation date: '||plf_orders(i).order_date
+                            || NewLineChar ||' Order date: '||plf_orders(i).order_date
                             || NewLineChar 
                             || NewLineChar ||'BODY'
                             || NewLineChar;
@@ -187,7 +187,7 @@ BEGIN
                     ln_amount           := ln_amount        + plf_orders(i).orders_table(j).quantity * plf_orders(i).orders_table(j).unit_price;
                     ln_amount_discount  := ln_amount_discount   + plf_orders(i).orders_table(j).quantity * plf_orders(i).orders_table(j).discount_price;
                     lc_clob_detail      := CONCAT(lc_clob_detail, NewLineChar 
-                                        ||' Line item id: '           ||plf_orders(i).orders_table(j).line_item_id
+                                        ||' Line item id: '          ||plf_orders(i).orders_table(j).line_item_id
                                         ||' Product id: '            ||plf_orders(i).orders_table(j).product_id
                                         ||' Unit price: '            ||plf_orders(i).orders_table(j).unit_price
                                         ||' Discount price: '        ||plf_orders(i).orders_table(j).discount_price
@@ -211,7 +211,7 @@ BEGIN
             WHERE   order_id = an_order_id;
             
         END IF;   
-         prc_log_table( USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, NULL, 'load order' );
+         prc_log_table( USER, SYSDATE, $$PLSQL_UNIT, LS_PROC_NAME, NULL, 'printed order' );
 
         EXCEPTION
             WHEN le_invalid_order THEN
