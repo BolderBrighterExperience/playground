@@ -1,8 +1,7 @@
-DROP SEQUENCE seq_08_id;
+DROP TABLE printed_orders;
 
-CREATE SEQUENCE seq_08_id
- START WITH     1
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
+CREATE TABLE printed_orders 
+(
+ id NUMBER,
+ details CLOB
+); 
