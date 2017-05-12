@@ -72,6 +72,7 @@ IS
                                     ' Email: '       ||gt_orders(ln_counter_i).cust_email||
                                     ' Phone number: '||gt_orders(ln_counter_i).phone_number      
                                     );*/
+            ln_counter_j := 0;
             FOR var_cursor_ord_items IN cursor_order_items(var_cursor_orders.order_id)
             LOOP
                 ln_counter_j :=  ln_counter_j + 1;
@@ -90,7 +91,7 @@ IS
             END LOOP;
         END LOOP;
         
-        IF (ln_counter_i = 0 OR ln_counter_j=0) THEN
+        IF ( ln_counter_i = 0 OR ln_counter_j=0 ) THEN
             RAISE_APPLICATION_ERROR(-20222,'Order id does not exist.');    
         END IF;
     
