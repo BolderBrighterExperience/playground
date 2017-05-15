@@ -320,36 +320,67 @@ BEGIN
     END;
 END prc_ut_remove_employee;
 
-PROCEDURE prc_ut_load_order
+PROCEDURE prc_ut_order_management
 IS
 BEGIN
-    BEGIN
-        pkg_order_management.prc_load_order(2453);
+    BEGIN           --EROARE nu exista acest order_id
+        pkg_order_management.prc_load_order(-103);     
         dbms_output.put_line('Success on loading order.');
     EXCEPTION
         WHEN OTHERS THEN
             dbms_output.put_line('Fail on loading order.');
     END;
-    BEGIN
-        pkg_order_management.prc_load_order(null);
+    BEGIN           --EROARE colectia nu a fost incarcata 
+        pkg_order_management.prc_print_order(-103);
+        dbms_output.put_line('Success on printing  order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+    END;
+    BEGIN           --SUCCES
+        pkg_order_management.prc_load_order(2453); 
         dbms_output.put_line('Success on loading order.');
     EXCEPTION
         WHEN OTHERS THEN
             dbms_output.put_line('Fail on loading order.');
     END;
-    BEGIN
-        pkg_order_management.prc_load_order(-103);
+    BEGIN           --SUCCES
+        pkg_order_management.prc_print_order(2453);
+        dbms_output.put_line('Success on printing  order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+    END;
+    BEGIN           --SUCCES
+        pkg_order_management.prc_load_order(2456);
         dbms_output.put_line('Success on loading order.');
     EXCEPTION
         WHEN OTHERS THEN
             dbms_output.put_line('Fail on loading order.');
     END;
-END prc_ut_load_order;
-
-PROCEDURE prc_ut_print_order
-IS
-BEGIN
-    BEGIN
+    BEGIN          --ERROR Acest order nu a fost incarcat in colectie
+        pkg_order_management.prc_print_order(2457);
+        dbms_output.put_line('Success on printing  order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+    END;
+    BEGIN          --SUCCES
+        pkg_order_management.prc_print_order(2456);
+        dbms_output.put_line('Success on printing  order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+    END;
+    BEGIN           --FAIL colectia nu a fost incarcata
         pkg_order_management.prc_print_order(null);
         dbms_output.put_line('Success on printing  order.');
         COMMIT;
@@ -357,35 +388,40 @@ BEGIN
         WHEN OTHERS THEN
             dbms_output.put_line('Fail on printing  order.');
             ROLLBACK;
-     END;
-    BEGIN
-        pkg_order_management.prc_print_order(2399);
-        dbms_output.put_line('Success on printing order.');
-        COMMIT;
+    END;
+    BEGIN           --SUCCES
+        pkg_order_management.prc_load_order(null);
+        dbms_output.put_line('Success on loading order.');
     EXCEPTION
         WHEN OTHERS THEN
-            dbms_output.put_line('Fail on printing order.');
-            ROLLBACK;
+            dbms_output.put_line('Fail on loading order.');
     END;
-    BEGIN
-        pkg_order_management.prc_print_order(2457);
-        dbms_output.put_line('Success on printing order.');
-        COMMIT;
-    EXCEPTION
-        WHEN OTHERS THEN
-            dbms_output.put_line('Fail on printing  order.');
-            ROLLBACK;
-    END;
-    BEGIN
-        pkg_order_management.prc_print_order(-105);
-        dbms_output.put_line('Success on printing order.');
+    BEGIN           --SUCCES
+        pkg_order_management.prc_print_order(null);
+        dbms_output.put_line('Success on printing  order.');
         COMMIT;
     EXCEPTION
         WHEN OTHERS THEN
             dbms_output.put_line('Fail on printing  order.');
             ROLLBACK;
     END;
-END prc_ut_print_order;
+    BEGIN            --SUCCES
+        pkg_order_management.prc_load_order(null);
+        dbms_output.put_line('Success on loading order.');
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on loading order.');
+    END;
+    BEGIN           --FAIL Toate au printed = 1;
+        pkg_order_management.prc_print_order(null);
+        dbms_output.put_line('Success on printing  order.');
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('Fail on printing  order.');
+            ROLLBACK;
+    END;
+END prc_ut_order_management;
 
 END pkg_unit_testing;
 /
