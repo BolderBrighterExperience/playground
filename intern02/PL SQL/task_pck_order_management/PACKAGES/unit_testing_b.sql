@@ -166,6 +166,18 @@ IS
         BEGIN 
             pkg_order_management.prc_load_order(2421);
             DBMS_OUTPUT.PUT_LINE('SUCCESSFUL LOAD ORDER');
+            pkg_order_management.prc_load_order(2436);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL LOAD ORDER');
+            pkg_order_management.prc_load_order(2396);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL LOAD ORDER');
+            pkg_order_management.prc_load_order(2406);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL LOAD ORDER');
+            pkg_order_management.prc_load_order(2367);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL LOAD ORDER');
+            pkg_order_management.prc_load_order(2361);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL LOAD ORDER');
+            pkg_order_management.prc_load_order(2364);
+            DBMS_OUTPUT.PUT_LINE('SUCCESSFUL LOAD ORDER');
         EXCEPTION
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO LOAD ORDER. CHECK LOG_TABLE');
@@ -184,12 +196,13 @@ IS
     IS
     BEGIN
         BEGIN
-            pkg_order_management.prc_print_order(2458);
+            pkg_order_management.prc_print_order(2396);
             DBMS_OUTPUT.PUT_LINE('SUCCESSFUL PRINT ORDER');
         EXCEPTION
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO PRINT ORDER. CHECK LOG_TABLE');
         END;
+        
         BEGIN
             pkg_order_management.prc_print_order(1);
             DBMS_OUTPUT.PUT_LINE('SUCCESSFUL PRINT ORDER');
@@ -197,13 +210,14 @@ IS
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO PRINT ORDER. CHECK LOG_TABLE');
         END;
-        /*BEGIN
+        
+        BEGIN
             pkg_order_management.prc_print_order(null);
             DBMS_OUTPUT.PUT_LINE('SUCCESSFUL PRINT ORDER');
         EXCEPTION
             WHEN OTHERS THEN
                 DBMS_OUTPUT.PUT_LINE('FAILED TO PRINT ORDER. CHECK LOG_TABLE');
-        END;*/
+        END;
     END call_prc_print_order;
     
 END unit_testing;
