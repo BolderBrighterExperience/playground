@@ -8,5 +8,7 @@ IS
     PROCEDURE prc_test_adjust_dept_data;
     PROCEDURE prc_test_remove_department;
     
+    PROCEDURE prc_order_management_ut;
+    
 END;
 /

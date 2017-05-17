@@ -242,7 +242,89 @@ IS
         WHEN OTHERS THEN
             DBMS_OUTPUT.PUT_LINE('EROARE STERGERE!!');
         END;
-    END prc_test_remove_department;     
+    END prc_test_remove_department;   
+    
+    PROCEDURE prc_order_management_ut
+    IS
+    BEGIN
+          BEGIN
+            pkg_order_management.prc_load_order(2457);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comanda a fost incarcata.');
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare incarcare comanda.');
+        END;
+        
+        -- order_id nu exista incarcat in colectie -> exceptie
+        BEGIN
+            pkg_order_management.prc_print_order(2446);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comanda a fost printata.');
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare printare comanda.');
+                ROLLBACK;
+        END;
+        
+        BEGIN
+            pkg_order_management.prc_load_order(2457);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comanda a fost incarcata.');
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare incarcare comanda.');
+        END;
+        
+        BEGIN
+            pkg_order_management.prc_print_order(2457);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comanda a fost printata.');
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare printare comanda.');
+                ROLLBACK;
+        END;
+        
+        -- colectie neincarcata -> exceptie
+        BEGIN
+            pkg_order_management.prc_print_order(2457);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comanda a fost printata.');
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare printare comanda.');
+                ROLLBACK;
+        END;
+        
+        -- colectie neincarcata
+        BEGIN
+            pkg_order_management.prc_print_order(null);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comenzile au fost printate.');
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare printare comenzi.');
+                ROLLBACK;
+        END;
+        
+        BEGIN
+            pkg_order_management.prc_load_order(null);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comenzile au fost incarcate.');
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare incarcare comenzi.');
+        END;
+        
+        BEGIN
+            pkg_order_management.prc_print_order(null);
+            DBMS_OUTPUT.PUT_LINE('SUCCES.Comenzile au fost printate.');
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.PUT_LINE('Eroare printare comenzi.');
+                ROLLBACK;
+        END;
+
+    END prc_order_management_ut ;    
 END;
 /
 
