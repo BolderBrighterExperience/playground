@@ -15,6 +15,7 @@ IS
                                phone_number    customers.phone_number%TYPE,
                                order_id        orders.order_id%TYPE,
                                order_date      orders.order_date%TYPE,
+                               order_printed   orders.printed%TYPE,
                                order_items     t_items
                               );
    TYPE t_orders  IS TABLE OF r_orders INDEX BY BINARY_INTEGER;  
@@ -22,3 +23,4 @@ IS
    PROCEDURE prc_print_order(an_order_id IN orders.order_id%TYPE DEFAULT NULL);
 END pkg_order_management;                             
 /
+
