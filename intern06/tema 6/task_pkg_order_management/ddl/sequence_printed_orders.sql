@@ -1,0 +1,8 @@
+DROP SEQUENCE printed_orders_SEQ;
+
+CREATE sequence printed_orders_SEQ
+INCREMENT BY 1
+START WITH 1
+MAXVALUE 999999
+NOCACHE
+NOCYCLE; 
