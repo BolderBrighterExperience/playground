@@ -82,5 +82,5 @@ BEGIN
 END;
 /
 
--- Le-am rulat si testat si mi-a dat urmatoarea afirmatie : "PL/SQL procedure successfully completed.". O sa-mi afiseze la primul BEGIN count = 2 pentru ca am introdus doar 2 inregistrari care sunt incarcate in record-ul g_invasives. 
+-- Le-am rulat si testat si mi-a dat urmatoarea afirmatie : "PL/SQL procedure successfully completed.". O sa-mi afiseze la primul BEGIN count = 0 pentru ca am introdus doar 2 inregistrari care sunt incarcate in record-ul g_invasives. 
 -- Al doilea begin o sa-mi afiseze toate inregistrarile din table invasives_t cu toate inregistrarile din record-urile g_invasives.
