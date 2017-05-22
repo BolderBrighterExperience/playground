@@ -1,0 +1,14 @@
+DECLARE
+  names plch_tool_names_t :=plch_tool_names_t ();
+BEGIN
+  names.EXTEND(3);
+  names(1) := 'Maria';
+  names(2) := 'Ioana';
+  names(3) := 'Vara';
+  
+  FOR indx IN 1 .. names.COUNT
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(names(indx));
+  END LOOP;
+END;
+/

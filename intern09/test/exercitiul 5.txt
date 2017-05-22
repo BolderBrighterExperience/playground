@@ -1,0 +1,17 @@
+SET SERVEROUTPUT ON
+DECLARE
+  TYPE string_array IS VARRAY(1000) OF VARCHAR2(100);
+  a_toy string_array;
+  CURSOR c1 IS
+    SELECT toy_name
+    FROM qz_toys;
+BEGIN
+  OPEN c1;
+    FETCH c1 BULK COLLECT INTO a_toy;
+  CLOSE c1;
+  FOR indx IN a_toy.FIRST .. a_toy.LAST
+    LOOP
+      DBMS_OUTPUT.PUT_LINE(a_toy(indx));
+    END LOOP;
+END;
+/
