@@ -1,1 +1,1 @@
--- In alta sesiune count va fi egal cu 0 in ambele cazuri
+-- In alta sesiune count va fi egal cu 0 in ambele cazuri pentru ca de fiecare data cand se apeleaza procedura se sterg datele
