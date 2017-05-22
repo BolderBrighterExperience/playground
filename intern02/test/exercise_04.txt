@@ -1,0 +1,18 @@
+CREATE OR REPLACE PROCEDURE plch_show_orders 
+IS
+    CURSOR cur_orders IS SELECT order_id FROM plch_orders ORDER BY status;
+    rec_orders    plch_orders.order_id%TYPE;
+BEGIN
+    OPEN cur_orders;
+    LOOP
+        FETCH cur_orders INTO rec_orders;
+        EXIT WHEN cur_orders%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(rec_orders);
+    END LOOP;
+    CLOSE cur_orders;
+END;
+/
+
+BEGIN
+   plch_show_orders;
+END;

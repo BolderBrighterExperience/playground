@@ -1,0 +1,21 @@
+SET SERVEROUTPUT ON
+
+CREATE OR REPLACE TYPE plch_tool_names_t
+   IS TABLE OF VARCHAR2 (100);
+/
+
+DECLARE
+    girls_name  plch_tool_names_t := plch_tool_names_t();
+BEGIN
+    girls_name.EXTEND(3);
+    girls_name(1) := 'Ana';
+    girls_name(2) := 'Oana';
+    girls_name(3) := 'Ioana';
+    
+    FOR l_row IN 1 .. girls_name.COUNT
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(girls_name(l_row));
+    END LOOP;
+END;
+/
+  

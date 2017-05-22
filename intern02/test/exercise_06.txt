@@ -1,0 +1,24 @@
+(in a different session) What will display this block call? Explain why:
+BEGIN
+   DBMS_OUTPUT.put_line (plch_pkg.g_invasives.COUNT);
+
+   plch_show_count;
+END;
+/
+
+OUTUP:
+0
+Count=0
+
+(in a different session) What will display this block call? Explain why:
+DECLARE
+   l_invasives   plch_pkg.invasives_t;
+BEGIN
+   plch_show_count;
+END;
+/
+
+OUTPUT:
+Count=0
+
+	Atributul %ROWTYPE este folosit doar pentru declararea unui record de tipul unui coloane dintr-o tabela, nu atribuie si valorile. De aceea valorile sunt 0.

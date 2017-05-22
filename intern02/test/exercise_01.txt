@@ -1,0 +1,6 @@
+SELECT '[' || email || ']' AS testing_email
+  FROM (
+        SELECT LTRIM(RTRIM(rawdata)) AS email
+        FROM qz_signups
+  )
+ ORDER BY email;

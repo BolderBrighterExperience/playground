@@ -1,0 +1,16 @@
+SET SERVEROUTPUT ON
+   
+DECLARE
+    date_except EXCEPTION;
+    PRAGMA EXCEPTION_INIT(date_except, -01858);
+BEGIN
+    INSERT 
+    INTO plch_orders(order_id, order_date) 
+    VALUES (500, TO_DATE('13-DEC-2004 6:56 PM','DD-MON-YYYY HH:MI:SS'));
+    
+    EXCEPTION
+        WHEN date_except THEN
+            DBMS_OUTPUT.PUT_LINE('Incorrect date format');
+            DBMS_OUTPUT.PUT_LINE(SQLERRM);
+END;
+/

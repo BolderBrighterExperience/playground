@@ -1,0 +1,15 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR cur_toys IS SELECT toy_name FROM qz_toys;
+    rec_toy_name    qz_toys.toy_name%TYPE;
+BEGIN
+    OPEN cur_toys;
+    LOOP
+        FETCH cur_toys INTO rec_toy_name;
+        EXIT WHEN cur_toys%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE( rec_toy_name );
+    END LOOP;
+    CLOSE cur_toys;
+END;
+/
