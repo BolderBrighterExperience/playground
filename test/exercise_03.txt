@@ -1,0 +1,31 @@
+I create and populate a table:
+
+CREATE TABLE plch_parts
+(
+   partnum    INTEGER PRIMARY KEY,
+   partname   VARCHAR2 (100) UNIQUE
+)
+/
+
+BEGIN
+   INSERT INTO plch_parts VALUES (1, 'Mouse');
+   INSERT INTO plch_parts VALUES (100, 'Keyboard');
+   INSERT INTO plch_parts VALUES (500, 'Monitor');
+   COMMIT;
+END;
+/
+I write the following incomplete block:
+
+DECLARE
+   l_count      PLS_INTEGER;
+   l_partnums   DBMS_SQL.number_table;
+BEGIN
+   /*STUFF*/
+
+   DBMS_OUTPUT.put_line ('Count = ' || SQL%ROWCOUNT);
+END;
+/
+where DBMS_SQL.number_table is defined as follows:
+
+TYPE DBMS_SQL.number_table IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+Which of the choices provide a replacement for /*STUFF*/ so that after the resulting block executes, "Count = 1" is displayed?

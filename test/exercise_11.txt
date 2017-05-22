@@ -1,0 +1,39 @@
+I create and populate my customers table as follows:
+
+CREATE TABLE plch_customers
+(
+   custnum    INTEGER
+ , custname   VARCHAR2 (100)
+)
+/
+
+BEGIN
+   INSERT INTO plch_customers
+        VALUES (1, 'Oracle Corporation');
+
+   INSERT INTO plch_customers
+        VALUES (100, 'Quest Software');
+
+   INSERT INTO plch_customers
+        VALUES (500, 'Feuerstein and Associates');
+
+   COMMIT;
+END;
+/
+Write an implementation of the plch_show_customers procedure so that the following text is displayed after execution of the block shown below:
+
+Feuerstein and Associates
+Oracle Corporation
+Quest Software
+And the block:
+
+BEGIN
+   plch_show_customers (
+     'select custname from plch_customers order by custname');
+END;
+/
+
+Hint: Use EXECUTE IMMEDIATE & BULK COLLECT INTO, OPEN cursor FOR & FETCH INTO
+PL/SQL offers a number of ways to retrieve multiple rows from a dynamic SQL query; 
+OPEN-FOR is especially helpful when you plan to use the BULK COLLECT clause as you fetch, 
+but also want to use the LIMIT clause to manage memory consumption.

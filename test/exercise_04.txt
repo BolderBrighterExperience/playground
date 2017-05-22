@@ -1,0 +1,39 @@
+I create and populate this table:
+
+CREATE TABLE plch_orders
+(
+   order_id     INTEGER PRIMARY KEY
+ , order_date   DATE
+ , status       VARCHAR2 (100)
+)
+/
+
+BEGIN
+   INSERT INTO plch_orders
+        VALUES (100, DATE '2010-01-15', 'CLOSED');
+
+   INSERT INTO plch_orders
+        VALUES (200, DATE '2010-11-15', 'OPEN');
+
+   INSERT INTO plch_orders
+        VALUES (300, DATE '2011-01-15', 'CLOSED');
+
+   INSERT INTO plch_orders
+        VALUES (400, DATE '2011-11-15', 'OPEN');
+
+   COMMIT;
+END;
+/
+Using cursors with parameters, write an implementation for the plch_show_orders procedure so that after this block is executed:
+
+BEGIN
+   plch_show_orders;
+END;
+The following four lines will be displayed:
+
+400
+200
+300
+100
+
+Choose the most elegant and efficient method you can think of.

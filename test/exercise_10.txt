@@ -1,0 +1,6 @@
+During development phase a common string value ('SUCCESS') was hardcoded in the database programs.
+The programmer decides to replaces it with a global constant.
+
+Write a query that finds all appearances of the string 'SUCCESS' in a given user's schema.
+
+Hint: query the oracle dictionaries

@@ -1,0 +1,8 @@
+I execute this statement:
+
+CREATE OR REPLACE TYPE plch_tool_names_t
+   IS TABLE OF VARCHAR2 (100)
+/
+
+Write a block that adds 3 values in a collection of the given type.
+Iterate on the collection and display the values you added in previous step.

@@ -1,0 +1,31 @@
+I execute the following statements:
+
+CREATE TABLE qz_toys (toy_name VARCHAR2 (20))
+/
+
+BEGIN
+   INSERT INTO qz_toys (toy_name)
+        VALUES ('blocks');
+
+   INSERT INTO qz_toys (toy_name)
+        VALUES ('princesses');
+
+   INSERT INTO qz_toys (toy_name)
+        VALUES ('rocking horse');
+
+   COMMIT;
+END;
+/
+Write an anonymous block that displays the following text:
+
+blocks
+princesses
+rocking horse
+
+Hints:
+Bulk SQL minimizes the performance overhead of the communication between PL/SQL and SQL.
+PL/SQL and SQL communicate as follows: To run a SELECT INTO or DML statement, the PL/SQL engine sends the query or DML statement to the SQL engine. The SQL engine runs the query or DML statement and returns the result to the PL/SQL engine.
+The PL/SQL features that comprise bulk SQL are the FORALL statement and the BULK COLLECT clause. 
+The FORALL statement sends DML statements from PL/SQL to SQL in batches rather than one at a time. 
+The BULK COLLECT clause returns results from SQL to PL/SQL in batches rather than one at a time. 
+If a query or DML statement affects four or more database rows, then bulk SQL can significantly improve performance.

@@ -1,0 +1,27 @@
+I have the following incomplete block of PL/SQL code:
+
+declare
+   type numbers_t is table of number;
+   numbers  numbers_t := numbers_t( 2, 4, null, 8, 10 );
+   idx      number;
+begin
+   idx := 1;
+   /*LOOP*/
+      if numbers(idx) is null then
+         dbms_output.put_line('null');
+      else
+         dbms_output.put_line(numbers(idx));
+      end if;
+      idx := idx + 1;
+   end loop;
+end;
+/
+I wish to loop through the nested table and output the values but stop at a value greater than 8. 
+For this case I consider a null value to be less than 8, so I want an output that looks like this:
+
+2
+4
+null
+8
+
+Provide a replacement for /*LOOP*/ that display the desired output from above.
