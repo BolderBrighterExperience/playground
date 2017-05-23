@@ -1,0 +1,31 @@
+CREATE OR REPLACE PROCEDURE plch_show_customers(as_string VARCHAR2)
+AS
+    CURSOR cur_cust IS
+      SELECT custname
+      FROM plch_customers
+      ORDER BY custname;
+     
+      TYPE string_array IS VARRAY(1000) OF VARCHAR2(100);
+      l_data string_array;
+    
+    BEGIN 
+    OPEN cur_cust; 
+    LOOP 
+      FETCH cur_cust BULK COLLECT into l_data LIMIT 3; 
+
+    FOR i IN 1 .. l_data.count 
+      LOOP 
+         DBMS_OUTPUT.PUT_LINE( l_data(i) ); 
+      END LOOP; 
+      EXIT WHEN cur_cust%notfound; 
+    END LOOP; 
+    CLOSE cur_cust;
+END;
+/
+
+SET SERVEROUTPUT ON
+BEGIN
+   plch_show_customers (
+     'select custname from plch_customers order by custname');
+END;
+/
