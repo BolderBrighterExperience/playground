@@ -15,7 +15,7 @@ commit
 
 SELECT '['||email||']' AS testing_email
 FROM (
-    SELECT REPLACE(rawdata, ' ', '') AS email
+    SELECT TRIM(rawdata) AS email
     FROM qz_signups 
     )
 ORDER BY email;

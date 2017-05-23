@@ -35,7 +35,7 @@ IS
       IS
           SELECT *
           FROM plch_orders
-          ORDER BY order_id DESC;
+          ORDER BY status DESC, order_id DESC;
 BEGIN
     FOR r1 IN c1 LOOP
         FOR r IN c(r1.order_id) LOOP

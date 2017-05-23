@@ -31,20 +31,20 @@ commit
 */
 
 
-select item_id
-     , item_name
-     , packages
-     , package_qty
-     , packages * package_qty order_qty
-  from (
-   select i.item_id
-        , i.item_name
-        , CEIL((i.min_inventory - y.qty)/i.PACKAGE_QTY) packages
-        , i.package_qty
-     from plch_items i
-     join plch_inventory y
-          on y.item_id = i.item_id
-    where y.qty < i.min_inventory
-       )
- order by item_id
+SELECT item_id,
+       item_name,
+       packages,
+       package_qty,
+       packages * package_qty order_qty
+FROM(
+    SELECT i.item_id,
+           i.item_name,
+           CEIL((i.min_inventory - y.qty)/i.package_qty) packages,
+           i.package_qty
+    FROM plch_items i
+    JOIN plch_inventory y
+    ON y.item_id = i.item_id
+    WHERE y.qty < i.min_inventory
+    )
+ORDER BY item_id;
 /
