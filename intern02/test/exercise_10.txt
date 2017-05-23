@@ -2,3 +2,9 @@ SELECT name, line, text
 FROM user_source
 WHERE UPPER (text) LIKE '%''SUCCESS''%' 
 ORDER BY name, line;
+
+--varianta 2
+SELECT name, line, text
+FROM user_source
+WHERE UPPER (text) LIKE q'[%'SUCCESS'%]'
+ORDER BY name, line;
