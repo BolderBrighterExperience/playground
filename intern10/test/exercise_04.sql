@@ -29,7 +29,7 @@ IS
     IS
       SELECT *
       FROM   plch_orders
-      ORDER BY EXTRACT(MONTH FROM order_date) DESC;
+      ORDER BY STATUS DESC, ORDER_DATE DESC;
     
     CURSOR c_get_id(p_order_id plch_orders.order_id%TYPE)
     IS
@@ -53,6 +53,7 @@ BEGIN
               DBMS_OUTPUT.PUT_LINE(ln_order_id);
           END LOOP;
           CLOSE c_get_id;
+          
       END LOOP; 
       CLOSE c_get_plch_orders;
 END plch_show_orders;
@@ -62,6 +63,7 @@ SET SERVEROUTPUT ON
 BEGIN
    plch_show_orders;
 END;
+/
 
 
 
