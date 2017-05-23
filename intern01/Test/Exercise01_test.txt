@@ -1,7 +1,0 @@
-select '[' || email || ']' as testing_email
-  from (
-   select rawdata as email
-     from qz_signups
-  )
- order by email
-/
