@@ -1,18 +1,36 @@
 CREATE OR REPLACE PROCEDURE plch_show_orders 
 IS
-    CURSOR cur_orders IS SELECT order_id FROM plch_orders ORDER BY status;
-    rec_orders    plch_orders.order_id%TYPE;
+    CURSOR cur_orders(par_status plch_orders.status%TYPE)
+    IS 
+    SELECT  order_id,
+            order_date,
+            status
+    FROM    plch_orders 
+    WHERE   UPPER(status) = UPPER(par_status)
+    ORDER BY status, order_date DESC;
+    
+    rec_orders    cur_orders%ROWTYPE;
 BEGIN
-    OPEN cur_orders;
+    OPEN cur_orders('OPEN');
     LOOP
         FETCH cur_orders INTO rec_orders;
         EXIT WHEN cur_orders%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE(rec_orders);
+        DBMS_OUTPUT.PUT_LINE(rec_orders.order_id);
+    END LOOP;
+    CLOSE cur_orders;
+    
+    OPEN cur_orders('CLOSED');
+    LOOP
+        FETCH cur_orders INTO rec_orders;
+        EXIT WHEN cur_orders%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(rec_orders.order_id);
     END LOOP;
     CLOSE cur_orders;
 END;
 /
 
+SET SERVEROUTPUT ON
 BEGIN
-   plch_show_orders;
+  plch_show_orders;
 END;
+/

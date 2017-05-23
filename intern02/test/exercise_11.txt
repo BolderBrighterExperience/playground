@@ -1,0 +1,28 @@
+CREATE OR REPLACE PROCEDURE plch_show_customers(ps_query VARCHAR2)
+AS
+    TYPE ref_cursor IS REF CURSOR; 
+    lc_cur ref_cursor; 
+
+    TYPE gt_cust_name IS TABLE OF plch_customers.custname%TYPE INDEX BY BINARY_INTEGER;
+    ls_names gt_cust_name; 
+    
+ BEGIN 
+    OPEN lc_cur FOR ps_query; 
+    LOOP 
+        FETCH lc_cur BULK COLLECT INTO ls_names LIMIT 5; 
+
+        FOR i IN 1 .. ls_names.COUNT 
+        LOOP 
+            DBMS_OUTPUT.PUT_LINE(ls_names(i)); 
+        END LOOP; 
+        EXIT WHEN lc_cur%NOTFOUND; 
+    END LOOP; 
+END; 
+/
+
+SET SERVEROUTPUT ON
+BEGIN
+   plch_show_customers (
+     'SELECT custname FROM plch_customers ORDER BY custname');
+END;
+/

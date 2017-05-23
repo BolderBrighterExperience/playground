@@ -6,11 +6,12 @@ select item_id
   from (
    select i.item_id
         , i.item_name
-        , CASE
+        , /*CASE
             WHEN MOD(i.min_inventory-y.qty, i.package_qty) = 0 THEN   
                 FLOOR((i.min_inventory-y.qty)/ i.package_qty)
             ELSE FLOOR((i.min_inventory-y.qty)/ i.package_qty) + 1
-            END packages
+            END packages*/
+            CEIL((i.min_inventory-y.qty)/ i.package_qty) packages
         , i.package_qty
      from plch_items i
      join plch_inventory y

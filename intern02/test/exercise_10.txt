@@ -1,4 +1,4 @@
 SELECT name, line, text
 FROM user_source
-WHERE UPPER (text) LIKE '%SUCCES%'
+WHERE UPPER (text) LIKE '''SUCCESS%''' --'%''SUCCESS%''%'
 ORDER BY name, line;
