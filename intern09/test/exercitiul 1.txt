@@ -1,0 +1,19 @@
+
+--varianta 1
+select '[' || email || ']' as testing_email
+  from (
+   select replace(rawdata,' ','') as email
+     from qz_signups
+  )
+ order by email
+/
+
+
+--varianta 2
+select '[' || email || ']' as testing_email
+  from (
+   select rtrim(rawdata,' ') as email
+     from qz_signups
+  )
+ order by email
+/
