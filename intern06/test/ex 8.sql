@@ -1,11 +1,11 @@
-create or replace function to_date1(
-                                    p_char_literal   in varchar2,
-                                    p_date_format    in varchar2
-                                  ) 
-                                  return date is
-begin 
-      return to_date(p_char_literal, p_date_format);
-      exception 
-      when others then
-      raise_application_error(-20001, 'Invalid date');
-end;
+ DECLARE
+   bad_date EXCEPTION;
+   PRAGMA EXCEPTION_INIT (bad_date, -01858);
+  BEGIN
+    DBMS_OUTPUT.PUT_LINE ( TO_DATE ('13-DEC-2004 6:56 PM','DD-MON-YYYY HH:MI:SS'));
+   EXCEPTION
+     WHEN bad_date
+   THEN
+    DBMS_OUTPUT.PUT_LINE('Bad date format');
+ END;
+  /

@@ -1,15 +1,32 @@
-create or replace procedure plch_show_orders is
-    v_order_id plch_orders.order_id%TYPE;
-    cursor c1(par_order_id  number) is select order_id from plch_orders
-        where order_id=par_order_id;
-     
-begin
-    open c1(par_order_id number);
-    loop 
-    fetch c1 into v_order_id;
-    exit when c1%NOTFOUND;
-    DBMS_OUTPUT.PUT_LINE (V_ORDER_ID);
-    end loop;
-    close c1;
-end;
- /
+CREATE OR REPLACE PROCEDURE plch_show_orders 
+IS
+CURSOR c_orders (as_status  plch_orders.status%TYPE)
+IS 
+  SELECT order_id
+  FROM plch_orders
+  WHERE UPPER(status) = UPPER(as_status)
+  ORDER BY status, order_date DESC;  
+rec_orders c_orders%ROWTYPE;
+BEGIN
+    OPEN c_orders('OPEN');
+    LOOP
+      FETCH c_orders INTO rec_orders;
+      EXIT WHEN c_orders%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE(rec_orders.order_id);
+    END LOOP;
+    CLOSE c_orders;
+    
+    OPEN c_orders('CLOSED');
+    LOOP
+      FETCH c_orders INTO rec_orders;
+      EXIT WHEN c_orders%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE(rec_orders.order_id);
+    END LOOP;
+    CLOSE c_orders;
+END;
+/ 
+
+SET SERVEROUTPUT ON
+BEGIN
+  plch_show_orders;
+END;

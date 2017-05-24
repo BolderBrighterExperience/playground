@@ -4,8 +4,8 @@ declare
    idx      number;
 begin
    idx := 1;
-   for i in numbers.first .. numbers.last loop
-     exit when idx>4;
+   WHILE numbers(idx) <= 8 OR numbers(idx) IS NULL
+   LOOP
      if numbers(idx) is null then
          dbms_output.put_line('null');
       else
