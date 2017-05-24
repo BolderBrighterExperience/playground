@@ -1,4 +1,5 @@
-SELECT object_type, object_name
-  FROM user_objects
- WHERE status = 'VALID'
- ORDER BY object_type, object_name;
+SELECT name, line, text
+  FROM user_source
+ WHERE UPPER (text) 
+  LIKE '%SUCCES%'
+ ORDER BY name, line;
