@@ -23,45 +23,33 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE plch_show_orders
+CREATE OR REPLACE PROCEDURE plch_show_orders(p_status plch_orders.status%TYPE)
 IS
-    CURSOR c_get_plch_orders
-    IS
-      SELECT *
-      FROM   plch_orders
-      ORDER BY STATUS DESC, ORDER_DATE DESC;
-    
-    CURSOR c_get_id(p_order_id plch_orders.order_id%TYPE)
+    CURSOR c_get_id(p_status plch_orders.status%TYPE)
     IS
       SELECT order_id
       FROM   plch_orders
-      WHERE  order_id = p_order_id;
+      WHERE  status = p_status
+      ORDER BY order_date DESC;
       
-    ln_orders   plch_orders%ROWTYPE;
+    --ln_orders   plch_orders%ROWTYPE;
     ln_order_id plch_orders.order_id% TYPE;
     
 BEGIN   
-      OPEN c_get_plch_orders;
-      LOOP
-          FETCH c_get_plch_orders INTO ln_orders;
-          EXIT WHEN c_get_plch_orders%NOTFOUND;
-          
-          OPEN c_get_id(ln_orders.order_id);
+          OPEN c_get_id(p_status);
           LOOP
               FETCH c_get_id INTO ln_order_id;
               EXIT WHEN c_get_id%NOTFOUND;
               DBMS_OUTPUT.PUT_LINE(ln_order_id);
           END LOOP;
           CLOSE c_get_id;
-          
-      END LOOP; 
-      CLOSE c_get_plch_orders;
 END plch_show_orders;
 /
 
 SET SERVEROUTPUT ON
 BEGIN
-   plch_show_orders;
+   plch_show_orders('OPEN');
+   plch_show_orders('CLOSED');
 END;
 /
 

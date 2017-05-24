@@ -26,21 +26,17 @@ IS
     TYPE t_bulk_collect IS TABLE OF plch_customers.custname%TYPE;
     lt_bulk_collect t_bulk_collect;
     l_cursor SYS_REFCURSOR;
-   /* CURSOR l_cursor
-    IS
-      SELECT custname
-      FROM   plch_customers;*/
 BEGIN
 
-    /*OPEN l_cursor FOR p_query;
+    OPEN l_cursor FOR p_query;
     FETCH l_cursor
     BULK COLLECT INTO lt_bulk_collect;
-    CLOSE l_cursor;*/
+    CLOSE l_cursor;
     
-   -- OR 
+   /* OR 
     
     EXECUTE IMMEDIATE p_query
-    BULK COLLECT INTO lt_bulk_collect;
+    BULK COLLECT INTO lt_bulk_collect;*/
     
     FOR i in lt_bulk_collect.FIRST..lt_bulk_collect.LAST
     LOOP
@@ -50,6 +46,7 @@ BEGIN
 END plch_show_customers;
 /
 
+set serveroutput on
 BEGIN
    plch_show_customers (
      'select custname from plch_customers');
