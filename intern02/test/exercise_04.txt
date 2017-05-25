@@ -34,3 +34,32 @@ BEGIN
   plch_show_orders;
 END;
 /
+
+
+
+---V2
+/*
+CREATE OR REPLACE PROCEDURE plch_show_orders 
+IS
+    CURSOR cur_orders(par_status plch_orders.status%TYPE)
+    IS 
+    SELECT  order_id,
+            order_date,
+            status
+    FROM    plch_orders 
+    WHERE   UPPER(status) LIKE UPPER(par_status)
+    ORDER BY status DESC, order_date DESC;
+    
+    rec_orders    cur_orders%ROWTYPE;
+BEGIN
+    OPEN cur_orders('%');
+    LOOP
+        FETCH cur_orders INTO rec_orders;
+        EXIT WHEN cur_orders%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(rec_orders.order_id);
+    END LOOP;
+    CLOSE cur_orders;
+END;
+/
+
+*/
