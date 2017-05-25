@@ -1,6 +1,6 @@
 CREATE OR REPLACE PROCEDURE plch_show_orders
 IS
-	CURSOR cur_proc(status VARCHAR2) IS
+	CURSOR cur_proc(p_status VARCHAR2) IS
     	SELECT order_id
     	FROM plch_orders
     	ORDER BY status DESC,order_id DESC;
