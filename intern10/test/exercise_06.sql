@@ -1,3 +1,4 @@
+DROP TABLE plch_invasives;
 CREATE TABLE plch_invasives
 (
    species_name        VARCHAR2 (100),

@@ -1,3 +1,4 @@
+drop table qz_signups;
 create table qz_signups (
    rawdata  varchar2(30)
 )

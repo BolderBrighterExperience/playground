@@ -1,3 +1,4 @@
+DROP TABLE plch_orders;
 CREATE TABLE plch_orders
 (
    order_id     INTEGER PRIMARY KEY
@@ -23,20 +24,20 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE plch_show_orders(p_status plch_orders.status%TYPE)
+CREATE OR REPLACE PROCEDURE plch_show_orders()
 IS
     CURSOR c_get_id(p_status plch_orders.status%TYPE)
     IS
       SELECT order_id
       FROM   plch_orders
       WHERE  status = p_status
-      ORDER BY order_date DESC;
+      ORDER BY status DESC,order_date DESC;
       
     --ln_orders   plch_orders%ROWTYPE;
-    ln_order_id plch_orders.order_id% TYPE;
+    ln_order_id plch_orders.order_id%TYPE;
     
 BEGIN   
-          OPEN c_get_id(p_status);
+          OPEN c_get_id('%');
           LOOP
               FETCH c_get_id INTO ln_order_id;
               EXIT WHEN c_get_id%NOTFOUND;
@@ -48,8 +49,8 @@ END plch_show_orders;
 
 SET SERVEROUTPUT ON
 BEGIN
-   plch_show_orders('OPEN');
-   plch_show_orders('CLOSED');
+   plch_show_orders();
+   plch_show_orders();
 END;
 /
 

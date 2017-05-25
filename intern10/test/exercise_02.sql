@@ -1,3 +1,5 @@
+drop table plch_items;
+drop table plch_inventory;
 create table plch_items (
    item_id        integer  primary key
  , item_name      varchar2(20)
