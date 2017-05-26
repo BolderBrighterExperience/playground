@@ -11,7 +11,7 @@ Exception
 End
 
 3. How can you reference variables defined in an anonymous PL/SQL parent block?
-Variabila locala
+Label
 
 4. What is a substitution variable?
 
@@ -74,7 +74,7 @@ In nested tables putem sterge valori, ramanand spatiu liber, iar atunci cand int
 20. What is a Collection CONSTRUCTOR?
 o functie definita de sistem cu acelasi nume
 21. What is a Collection Method? Name several Collection Methods.
-Limit, Prior, Delete,Extend
+un subprogram,Limit, Prior, Delete,Extend
 
 22. What is a Composite data type RECORD?
 Un tip de date compus care poate avea diverse tipuri de date
