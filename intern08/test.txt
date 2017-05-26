@@ -1,0 +1,52 @@
+1.Constantele nu isi schimba valoare,iar variabilele isi pot schimba valoarea.
+2.	DECLARE
+	BEGIN
+	EXCEPTION
+	END
+3.
+5.O sa contina mai multe componente.
+6.Resultatul va fi o eroare.
+7.DECLARE
+	exception_name EXCEPTION
+	BEGIN
+	IF -conditie- THEN
+		RAISE exception_name;
+	END IF;
+	EXCEPTION
+	WHEN exception_name THEN
+	-statement-
+  END;
+8.Cursori sunt folositi pentru a procesa individual randurile returnate dintr un querry
+	Acestia sunt de doua tipuri:impliciti si expliciti.
+9.SQL%ROWCOUNT returneaza numarul de randuri care au suferit modificari.
+10.Avantajul este ca LOOP-ul se face pana cand niciun rand nu mai exista in tabel
+Exemplu: FOR "nume record" in "nume cursor"
+			LOOP
+				-statement-
+			END LOOP;
+11.Tipurile de parametrii sunt : IN , OUT , IN OUT.
+12.Da, procedura poate contine RETURN.Cand o sa ajung la RETURN procedura o sa se opreasca.
+13.Procedura nu intoarce o valoare,iar functia trebuia sa intoarca.
+   Putem apela functia in SELECT,dar procedura nu o putem apela.
+14.EXECUTE package_name.subprogram_name;
+		OR
+	BEGIN
+	package_name.subprogram_name;
+	END;
+15.COMPOSITE data type contine valori scalare sau composite.
+16.Collection si Records
+17.Associative array,VARRAYS,Nested Tables.
+18.VARRAYS
+19.ARRAYS sunt ordonate in ordinea de sortare a indexului,iar la Nested tables valorile indexului nu trebuie sa fie consecutive.
+20.Collection Constructor este o functie definita de sistem,care returneaza o colectie de acelasi type.
+Daca parametrul este empty,intoarce o colectie empty.
+21.DELETE,TRIM,EXTEND,EXISTS,FIRST,LAST,COUNT,LIMIT,PRIOR,NEXT.
+22.Records au tipuri diferite de date.Un record are campuri si acestea pot avea valoare NULL.
+Putem folosi %TYPE SI %ROWTYPE.
+23.TYPE "type_name1" IS VARRAY(5) OF INTEGER;
+	TYPE "type_name2"  IS VARRAY(5) OF "type_name1";
+24.DELETE - sterge elementele din colectie.
+   DELETE(n) - sterge elementul de pe pozitia n.
+25.TYPE "type_name" IS RECORD (campul1 datatype NOT NULL := 10	
+								campul2 datatype2 DEFAULT );
+   "record_name" "type_name";
