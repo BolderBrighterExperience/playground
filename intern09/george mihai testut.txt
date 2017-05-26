@@ -1,0 +1,54 @@
+1.o constanta nu isi schimba valoarea pe durata programului,pe cand o variabila da
+2.DECLARE
+  BEGIN
+  END
+3.printr-un label pus inainte de numele variabilei ex:<<label>>.first_name
+4.o variabila de substitutie este o variabila care are & inainte si care contine o anumita valoare
+5.la cea folosita ca pl/sql block se pune end case
+6.eroare
+7.o exceptie se declara in declare si apoi se trateaza in exceptions
+8.un cursor este o structura care aloca o zona privata de memorie in care se vor adauga informatii
+Exista 2 tipuri de cursori:
+impliciti si expliciti
+9.ROWCOUNT numara cate linii au fost afectate
+10.cursor for loop declara implicit indexul si deschide si inchide automat cursorul
+  ex:
+BEGIN 
+	for i in (1,2,3,5) loop
+	dbms_output.put_line('treaba buna');
+	end loop
+END;
+
+11.tipuri de moduri : in,out,in out
+12.da,poate avea o clauza return in cazul in care intoarce un rezultat din alta procedura si modul parametrului este out
+13.o precedura poate sau nu sa intoarca un rezultat,dar functia trebuie obligatoriu sa intoarca ceva
+14.EXECUTE IMMEDIATE nume_pachet.nume_procedura
+15.un tip de data compozit este un tip de date care are componente interne
+16.collections si records
+17.varray
+	associative arrays
+	nested tables
+18.varray
+19.la nested tables pot exista spatii goale intre elemente si valorile indexului pot sa nu fie consecutive,iar la vectori asociativi indecsii sunt pusi in ordinea de sortare nu in ordinea in care au fost creati
+20.este o functie care aloca memorie si adauga elem si are acelasi nume ca si calectia si returneaza tipul colectiei
+21.metodele sunt niste functii sau proceduri care opereaza pe colectii
+.EXISTS
+.PRIOR
+.FIRST
+.LAST
+.NEXT
+.EXISTS
+22.un record este o structura de date care poate retine campuri de tipuri de date diferite
+23.type test is varray(10) of integer;
+   type test1 is varray(10) of test;
+   nota test1:=test1(10,9,8);
+
+
+   type test is table of varchar2(50);
+   type test 1 is table of test index by pls_integer;
+   nota test :=test (6,10)
+   nota 2 test1;
+24.metoda delete sterge un rand
+   metoda delete(n) sterge al n-lea rand
+25.se acceseaza elementele recordului prin sintaxa:
+     nume_variabila.nume_camp
