@@ -1,0 +1,95 @@
+1. O constanta nu-si schimba valoarea , iar variabila poate avea orice tip de date.
+
+2. Blocuri anonime , proceduri si functii.
+
+3. Inaintea blocului anonim punem o sintaxa de genul " <<test>> ".
+
+4. O variabila substituita se noteaza cu & sau &&. Executa ca si cum ar contine valoarea variabilei de substitutie decat variabila in sine.
+
+5. CASE WHEN statement1 THEN ...
+        WHEN statement2 THEN ...
+        ELSE ...
+   END;
+   
+   CASE selector WHEN statement1 THEN ...
+                 WHEN statement2 THEN ...
+                 ELSE ...
+   END CASE;
+    
+    --diferenta dintre cele doua sintaxe ale case-ului este faptul ca al doilea case are un selector si se termina cu "end case".
+    
+6. declare
+var a number;
+var b number default 3;
+begin
+if b>a then
+  dbms_output.put_line('B is greater than A');
+else
+  dbms_output.put_line('A is greater than B');
+end if;
+exception when others then
+dbms_output.put_line('B is equal to A');
+end;
+
+-- cred ca intra in exceptie pentru ca b este default 3 
+
+7. nume_exceptie EXCEPTION;
+ PRAGMA EXCEPTION_INIT ( nume_exceptie , -ora);
+ 
+ EXCEPTION WHEN nume_exceptie THEN
+ DBMS_OUTPUT.PUT_LINE ( ' Exceptia  este rezolvata ' ) 
+ EXEPTION WHEN OTHERS THEN
+ DBMS_OUTPUT.PUT_LINE ( ' Exceptia nu este rezolvata ' ) ;
+ 
+
+8.Cursorul este o constructie PL/SQL care iti permite sa denumesti aceste arii de lucru si care acceseaza informatia.
+Cursorii pot fi de 2 tipuri : cursor explicit si cursor implicit.
+
+9.Cand un cursor este deschis SQL%ROWCOUNT este egal cu 0. Dupa comanda FETCH SQL%ROWCOUNT al cursorului va arata valoarea 0.
+
+10. Cursorul FOR LOOP declara implicit index-ul loop-ului ca fiind o variabila record.
+
+sintaxa : FOR record_index in cursor_name
+            LOOP
+                {...statements...}
+            END LOOP;
+            
+11. Cei 3 parametrii sunt : IN , OUT sau IN OUT.
+
+12. RETURN intr-o procedura semnifica faptul ca executia se reia.
+
+13. Se poate crea o procedura pentru a retine o serie de operatii pentru o executie anterioara pe cand functia o folosim atunci cand
+dorim sa transmitem o singura valoare. Procedura nu trebuie neaparat sa returneze o valoare.
+
+14. nume_pachetului.numele_procedurii;
+
+15. Composite data types sunt valori care au componente interne care pot fi scalare sau compuse.
+
+16. Scalar si composite
+
+17. COLLECTION si RECORD
+
+18.Varray
+
+19.La nested tables nu trebuie specificat un nr. max de elemente , la varray trebuie specificat nr. de elemenete.
+
+20. Collection CONSTRUCTOR este o functie definita de sistem.
+
+21. Metoda sintaxa : collection.name.method
+Apelam colectia folosind metodele : DELETE , TRIM , FIRTS , LAST , EXTEND , EXISTS etc.
+
+22.Un record are campuri si trebuie creat un type si o variabila de tipul type-ului.
+
+23.CREATE TYPE curs AS TABLE OF VARCHAR2(10)  
+/
+CREATE TYPE Student AS OBJECT (  
+   id_stud  INTEGER(4),
+   nume    VARCHAR2(25),
+   status  CHAR(2),
+   cursuri curs)  
+/
+
+24. Metoda DELETE sterge coloanele dorite.
+DELETE(N) atunci se vor sterge N coloane , daca N = 2 , atunci se vor sterge 2 coloane.
+
+25. sintaxa : variable_name.field_name
