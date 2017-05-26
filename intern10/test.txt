@@ -1,0 +1,27 @@
+1. Spre deosebire de variabila, valoarea constantei odata initializata nu poate fi modificata.
+2. Principalele componente a unui bloc anonim sunt: declare, begin, end
+3. Prin intermediul unui label.
+4. O variabila de substitutie poate fi definita si utilizata pentru utilizari repetate.Aceasta este precedata de ampersand &.
+5. Cand este utilizat ca un bloc PL/SQL acesta se incheie cu END CASE, iar folosit ca un expresie un END.
+6. Blocul va genera o eroare.
+7. Eroare este declarata in sectiunea de declare, este de tip exception, este tratata in blocul de EXCEPTION, iar executia este oprita si transferata catre blocul de exception (exception handler) prin intermediul lui RAISE.
+8. Un cursor este un pointer catre o anumite zona de memorie si poate fi de 2 feluri : implicit si explicit.
+9. SQL%ROWCOUNT va intoarce numarul de randuri modificate in urma efectuarii unei anumite operatii: insert, update, delete sau a unui select.
+10. Un cursor de tipul FOR loop va realiza inchiderea,deschiderea cursorului in mod automat. 
+11. Cele 3 tipuri de parametri sunt: IN,OUT si IN OUT.
+12. RETURN folosit in procedura va avea ca rezultat inchierea procedurii respective.
+13. Procedura poate intoarce o valoare, in timp ce pentru functie e obligatoriu sa intoarca o valoare (are un tip pe care il va returna).
+Functia poate fi apelata in select-uri.
+14. Un subprogram dintr-un pachet poate fi apelat intr-un bloc anonim BEGIN END prin numele_pachetului.nume_procedura|nume_functie sau prin EXECUTE.
+15. Un tip de data compus poate avea componente interne : variabile scalare sau alte date compuse.
+16. Datele compuse sunt : recordurile si colectiile.
+17. Tipuri de colectii sunt : associative array, varray, nested tables.
+18. Varray trebuie sa aiba un numar maxim de elemente specificat.
+19. Nested tables nu au o lungime predefinita, pe cand varray-ul da.In varray accesul se face secvential, iar in nested valorile nu sunt consecutive.
+20. Constructorul este folosit pentru a initializa colectiile - varray, nested tables.
+21. Metode ale colectiilor sunt: EXTEND - pentru adaugarea unor elemente, 
+DELETE, TRIM - pentru stergerea de la sfarsit, FIRST, LAST, PRIOR, COUNT.
+22. Un record este un tip de data compus ce poate avea componente diferite si este compus din campuri.
+23. Multilevel composite data type : table of table, tabel of varray
+24. Delete va sterge toata colectia, iar Delete(n) va sterge un element de pe o anumita pozitie.
+25. numele_pachetului.nume_record.nume_camp
