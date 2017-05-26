@@ -5,7 +5,7 @@
 5. Cand este utilizat ca un bloc PL/SQL acesta se incheie cu END CASE, iar folosit ca un expresie un END.
 6. Blocul va genera o eroare.
 7. Eroare este declarata in sectiunea de declare, este de tip exception, este tratata in blocul de EXCEPTION, iar executia este oprita si transferata catre blocul de exception (exception handler) prin intermediul lui RAISE.
-8. Un cursor este un pointer catre o anumite zona de memorie si poate fi de 2 feluri : implicit si explicit.
+8. Un cursor este un pointer catre o anumita zona de memorie si poate fi de 2 feluri : implicit si explicit.
 9. SQL%ROWCOUNT va intoarce numarul de randuri modificate in urma efectuarii unei anumite operatii: insert, update, delete sau a unui select.
 10. Un cursor de tipul FOR loop va realiza inchiderea,deschiderea cursorului in mod automat. 
 11. Cele 3 tipuri de parametri sunt: IN,OUT si IN OUT.
