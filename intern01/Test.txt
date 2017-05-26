@@ -1,0 +1,91 @@
+1. What is the difference between a variable and a constant?
+
+Variabila poate avea diverse valori,in timp ce constanta nu trebuie sa fie modificata.
+
+
+2. What are the 3 main components of an anonymous PL/SQL block?
+
+Declare
+Begin
+Exception
+End
+
+3. How can you reference variables defined in an anonymous PL/SQL parent block?
+Variabila locala
+
+4. What is a substitution variable?
+
+O variabila precedata de & sau &&
+
+5. What is the syntax difference for a case construct when used as PL/SQL block or as an expression and statement.
+
+Putem folosi case urmat de o expresie careia ii verificam anumite conditii
+sau putem folosi pentru fiecare conditie o anumita expresie.
+
+6. O eroare,variabila a nu a fost initializata.
+
+7. How do you declare an exception and how do you stop the normal execution of a PL/SQL block or subprogram and transfers control to the exception handler or to handlers from parents blocks or to the host environment.
+
+Declare exceptia in partea de declararea,iar in partea de exceptii prinzi exceptia. Folosim RAISE pentru a transfera controlul
+
+8. What is an SQL Cursor and what are the 2 main types of Cursors?
+
+Un bloc care se foloseste de un anumit spatiu din memorie pentru a executa un statement.
+Exista 2 tipuri de cursoare,implicite si explicite. 
+
+
+9. What it is the use of the Cursor attribute SQL%ROWCOUNT?
+
+Veerifica cate randuri au fost returnate
+
+10. What are the advantages of using a PL/SQL Cursor FOR loop? Please provide a short example of a Cursor FOR loop.
+Nu trebuie sa mai declaram indexul,iar atunci cand nu mai are randuri de adus inchide cursorul
+DECLARE
+ l.country countries
+BEGIN
+ l.country :=countries('France','Poland');
+For i in l.country.FIRST..l.country.LAST
+LOOP
+ DBMS_OUTPUT.PUT_LINE(l_country(i));
+    END LOOP;
+END;
+
+11. What are the 3 types of parameter modes?
+In, Out, In Out
+12. Can a PL/SQL Procedure contain a RETURN clause? Please explain your answer.
+Poate contine atunci cand dorim sa stopam executia,deoarece a obtinut ceea ce a cautat.
+
+13. Name at least 2 differences between a PROCEDURE and a FUNCTION in PL/SQL.
+O functie contine in sintaxa obligatoriu clauza return si obligatoriu trebuie sa intoarca ceva,pe cand procedura nu.
+14. How can you invoke or call a package subprogram?
+Printr-un bloc anonim, begin,pachetul,end
+
+15. What is a COMPOSITE data type?
+
+Un tip de date care contine compnente interne
+16. What are the 2 kinds of COMPOSITE data type?
+Record si collections
+17. What are the types of Collections?
+Associative Arrays, Varray, Nested table
+18. What type of collection must have the maximum number of elements specified?
+Varray
+19. State at least one difference between ARRAYS and NESTED TABLES
+In nested tables putem sterge valori, ramanand spatiu liber, iar atunci cand introducem o noua valoare ea va ocupa spatiul ramas liber
+20. What is a Collection CONSTRUCTOR?
+o functie definita de sistem cu acelasi nume
+21. What is a Collection Method? Name several Collection Methods.
+Limit, Prior, Delete,Extend
+
+22. What is a Composite data type RECORD?
+Un tip de date compus care poate avea diverse tipuri de date
+23. Give an example of a multilevel composite data type variable. Any combination will suffice.
+Un record poate contine o colectie
+Declare
+TYPE t_country IS TABLE OF varchar2 index by varchar2(64);
+city_population t_country;
+TYPE population is Record (name varchar2(30), 
+			   city_population t_country);
+24. What does the Collection method DELETE do and what does the DELETE(N) Method do?
+Delete(n) sterge elementul n
+25. How can we reference a RECORD type defined in a package specification.
+Trebuie declarat si in package body
