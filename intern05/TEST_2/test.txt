@@ -65,9 +65,9 @@ dorim sa transmitem o singura valoare. Procedura nu trebuie neaparat sa returnez
 
 15. Composite data types sunt valori care au componente interne care pot fi scalare sau compuse.
 
-16. Scalar si composite
+16.COLLECTION si RECORD
 
-17. COLLECTION si RECORD
+17.varray , associative array si nested tables 
 
 18.Varray
 
