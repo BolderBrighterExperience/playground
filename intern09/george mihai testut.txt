@@ -10,7 +10,7 @@
 8.un cursor este o structura care aloca o zona privata de memorie in care se vor adauga informatii
 Exista 2 tipuri de cursori:
 impliciti si expliciti
-9.ROWCOUNT numara cate linii au fost afectate
+9.ROWCOUNT numara cate linii au fost afectate de statement
 10.cursor for loop declara implicit indexul si deschide si inchide automat cursorul
   ex:
 BEGIN 
