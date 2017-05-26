@@ -1,0 +1,110 @@
+1. What is the difference between a variable and a constant?
+2. What are the 3 main components of an anonymous PL/SQL block?
+3. How can you reference variables defined in an anonymous PL/SQL parent block?
+4. What is a substitution variable?
+5. What is the syntax difference for a case construct when used as PL/SQL block or as an expression and statement.
+6. We have the following PL/SQL block:
+declare
+var a number;
+var b number default 3;
+begin
+if b>a then
+  dbms_output.put_line('B is greater than A');
+else
+  dbms_output.put_line('A is greater than B');
+end if;
+exception when others then
+dbms_output.put_line('B is equal to A');
+end;
+What will be the result of running the PL\SQL block;
+7. How do you declare an exception and how do you stop the normal execution of a PL/SQL block or subprogram and transfers control to the exception handler or to handlers from parents blocks or to the host environment.
+8. What is an SQL Cursor and what are the 2 main types of Cursors?
+9. What it is the use of the Cursor attribute SQL%ROWCOUNT?
+10. What are the advantages of using a PL/SQL Cursor FOR loop? Please provide a short example of a Cursor FOR loop.
+11. What are the 3 types of parameter modes?
+12. Can a PL/SQL Procedure contain a RETURN clause? Please explain your answer.
+13. Name at least 2 differences between a PROCEDURE and a FUNCTION in PL/SQL.
+14. How can you invoke or call a package subprogram?
+15. What is a COMPOSITE data type?
+16. What are the 2 kinds of COMPOSITE data type?
+17. What are the types of Collections?
+18. What type of collection must have the maximum number of elements specified?
+19. State at least one difference between ARRAYS and NESTED TABLES
+20. What is a Collection CONSTRUCTOR?
+21. What is a Collection Method? Name several Collection Methods.
+22. What is a Composite data type RECORD?
+23. Give an example of a multilevel composite data type variable. Any combination will suffice.
+24. What does the Collection method DELETE do and what does the DELETE(N) Method do?
+25. How can we reference a RECORD type defined in a package specification.
+
+
+1.Variabilelor li se pot atribui alte valori,pe cand constantelor  nu.
+
+2.Principalele 3 componente ale unui block anonim sunt: Declare,Begin,End
+
+3. Se poate face referire la variabilele din bloxul parinte prin prefixarea acestora cu o eticheta. <<label>>.variabila
+
+4.Reprezita inlocuirea unei valori cu o variabila.
+
+5.Cand este folosit ca structura de sine statatoare se termina cu 'end case;', in celelalte situatii doar cu 'End'
+
+6. B is equal to A
+
+7.Declaram exceptia in blocul de declarare si facem referire la ea in blocul de executie la nivelul 'exception' al blocului inner sau al parintelui.
+daca nu tratam exceptia aceasta se propaga in host environment.
+
+8. Un cursor este un pointer care parcurge un set de date. Cursorii pot si impliciti (definiti de programul de executie) si expliciti (definiti de programator)
+
+9.Cu SQL%ROWCOUNT putem afisa cate randuri au fost modificate in urma executiei.
+
+10. Avantajele folosirii cursor for loop reprezinta sunt: 
+- cursorul este deschis si inchis automat de program 
+- ajuta la o citirea si mentenanta codului
+
+declare
+    cursor c1 is select * from table;
+    rec_tab table.column%TYPE;
+begin 
+    for rec_tab in c1 loop
+    null
+    end loop;
+end;
+
+11.Parameter: IN,OUT,IN OUT
+
+12. O procedura poate contine clauza RETURN. Cand este intalnita aceasta clauza in procedura, programul opreste rularea procedurii la acel punct.
+
+13. - Functiile trebuie sa returneze o valoare, pe cand procedurile efectueaza o actiune
+    - Functiile trebuie sa contina clauza Return pe cand la procedurile nu
+    
+14. Apelarea unui subprogram al unui pachet se face prin : package_name.subprogram_name
+
+15.Un tip de date composite pot avea mai multe elemente componente
+
+16.COMPOSITE type : - Collections
+                    - Records
+                    
+17. Types of collection : - associative array
+                          - variable array (varray)
+                          - nested table
+          
+18. Varray
+
+19. Associative array atunci cand este neinitializat are status 'empty', pe cand nested tables are 'null'
+    
+
+20. Este o functie definita de sistem cu acelasi nume al type-ului care returneaza o colectie.
+
+21. Collection metod - reprezinta un operator al unei colectii. Exemple: DELETE,TRIM,EXTEND,COUNT,FIRST,LAST
+
+22. Un RECORD reprezinta un tip da date compus care contine campuri.Acesta poate fi definit pe baza unui table existent.
+
+23. Type exemplu IS TABLE OF number index by varchar2(60);
+    v_type exemplu;
+    Type exemplu1 is RECORD ( COL_1 number,
+                              COL_2 exemplu
+                            );
+                            
+24.Delete sterge toate elementele dintr-o colectie, pe cand delete(n) sterge elementul cu indexul n al colectiei.
+
+25. package_name.record_type
