@@ -1,6 +1,6 @@
 1. O constanta nu-si schimba valoarea , iar variabila poate avea orice tip de date.
 
-2. Blocuri anonime , proceduri si functii.
+2. Blocuri anonime , proceduri si functii. ( DECLARE , BEGIN , EXCEPTION ).
 
 3. Inaintea blocului anonim punem o sintaxa de genul " <<test>> ".
 
