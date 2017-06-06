@@ -12,7 +12,7 @@ PRAGMA AUTONOMOUS_TRANSACTION;
     V_unit  VARCHAR2(50)    := p_unit;
 BEGIN
     INSERT 
-    INTO log 
+    INTO log
     VALUES (
             seq_log_id.NEXTVAL,
             USER,
